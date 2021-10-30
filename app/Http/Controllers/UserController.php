@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\BranchOffice;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
-class BranchOfficeController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,9 +17,11 @@ class BranchOfficeController extends Controller
      */
     public function index()
     {
-        $sucursales = BranchOffice::all();
-        return view('branches.index',[
-            'sucursales' => $sucursales
+        $users = User::all();
+        $offices = BranchOffice::all();
+        return view('user.index',[
+            'users' => $users,
+            'officess' => $offices,
         ]);
     }
 
@@ -39,11 +43,12 @@ class BranchOfficeController extends Controller
      */
     public function store(Request $request)
     {
+        $request['password'] = Hash::make($request->password);
         try {
             DB::beginTransaction();
-            $sucursal = BranchOffice::create($request->all());
+            $user = User::create($request->all());
             DB::commit();
-            return redirect()->route('sucursales');
+            return redirect()->route('users');
         } catch (\Error $th) {
             DB::rollBack();
             return $th;
@@ -53,10 +58,10 @@ class BranchOfficeController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\BranchOffice  $branchOffice
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(BranchOffice $branchOffice)
+    public function show($id)
     {
         //
     }
@@ -64,10 +69,10 @@ class BranchOfficeController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\BranchOffice  $branchOffice
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(BranchOffice $branchOffice)
+    public function edit($id)
     {
         //
     }
@@ -76,16 +81,21 @@ class BranchOfficeController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\BranchOffice  $branchOffice
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, BranchOffice $branchOffice)
+    public function update(Request $request, User $user)
     {
+        $req = new Request();
+        $req['name'] = $request->name;
+        $req['address'] = $request->address;
+        $req['branch_office_id'] = $request->branch_office_id;
+        //return $request;
         try {
             DB::beginTransaction();
-            DB::table('branch_offices')->where('id','=',$branchOffice->id)->update($request->all());
+            DB::table('users')->where('id','=',$user->id)->update($req->all());
             DB::commit();
-            return redirect()->route('sucursales');
+            return redirect()->route('users');
         } catch (\Error $th) {
             DB::rollBack();
             return $th;
@@ -95,10 +105,10 @@ class BranchOfficeController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\BranchOffice  $branchOffice
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(BranchOffice $branchOffice)
+    public function destroy($id)
     {
         //
     }
