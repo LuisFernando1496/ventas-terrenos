@@ -15,6 +15,12 @@ class CreateCreditsTable extends Migration
     {
         Schema::create('credits', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('client_id');
+            $table->foreign('client_id')->references('id')->on('clients')->onDelete('cascade');
+            $table->double('authorized_credit');
+            $table->unsignedBigInteger('user_authorized_id');
+            $table->foreign('user_authorized_id')->references('id')->on('users')->onDelete('cascade');
+            $table->date('payment_day');
             $table->timestamps();
         });
     }

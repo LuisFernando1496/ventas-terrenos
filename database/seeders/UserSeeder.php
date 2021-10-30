@@ -2,12 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\BranchOffice;
 use App\Models\User;
-use Database\Factories\BranchOfficeFactory;
 use Illuminate\Database\Seeder;
 
-class BranchOfficeSeeder extends Seeder
+class UserSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -16,6 +14,6 @@ class BranchOfficeSeeder extends Seeder
      */
     public function run()
     {
-        $sucursales = BranchOffice::Factory(1)->create();
+        $User = User::factory(1)->create();
     }
 }
