@@ -102,8 +102,36 @@
                                     <div class="row">
                                         <div class="col">
                                             <div class="form-group">
-                                                <label for="">Dirección</label>
-                                                <textarea name="address" id="" cols="30" rows="2" class="form-control"></textarea>
+                                                <label for="">Avenida</label>
+                                                <input type="text" name="street" class="form-control" id="">
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label for="">Colonia</label>
+                                                <input type="text" class="form-control" name="suburb">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label for="">CP</label>
+                                                <input type="number" name="postal_code" id="" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label for="">Nº Exterior</label>
+                                                <input type="number" name="ext_number" id="" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label for="">Nº Interior</label>
+                                                <input type="number" class="form-control" name="int_number" id="">
                                             </div>
                                         </div>
                                     </div>
