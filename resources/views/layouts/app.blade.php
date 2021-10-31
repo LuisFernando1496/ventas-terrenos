@@ -10,7 +10,7 @@
 
     <!-- Fonts -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
-
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css" />
     <!-- Styles -->
     <link rel="stylesheet" href="{{ mix('css/app.css') }}">
     <!-- CSS only -->
@@ -21,7 +21,7 @@
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
     </script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.6.1/font/bootstrap-icons.css">
-
+    <link href="https://unpkg.com/tailwindcss@2.0.1/dist/tailwind.min.css" rel="stylesheet">
     @livewireStyles
 
     <!-- Scripts -->
@@ -32,22 +32,36 @@
     <x-jet-banner />
 
     <div class="min-h-screen bg-gray-100">
-        @livewire('navigation-menu')
+       
 
-        <!-- Page Heading -->
-        @if (isset($header))
-            <header class="bg-white shadow">
-                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                    {{ $header }}
-                </div>
-            </header>
-        @endif
 
-        <!-- Page Content -->
-        <main>
-            {{ $slot }}
-        </main>
+
+ <div class="flex min-h-scree">
+     <div >
+       @livewire('sidebar-nav-bar')
     </div>
+    <div class="flex-1">
+         @livewire('navigation-menu')
+                        @if (isset($header))
+                            <header class="bg-white shadow  ">
+                                <div class="max-w-7xl mx-auto py-3 px-4 sm:px-6 lg:px-8">
+                                    {{ $header }}
+                                </div>
+                            </header>
+                        @endif
+
+
+                        <!-- Page Content -->
+                        <main >
+                            {{ $slot }}
+                        </main>
+    </div>
+            <!-- Page Heading -->
+           
+    </div>
+  </div>
+
+
 
     @stack('modals')
 
