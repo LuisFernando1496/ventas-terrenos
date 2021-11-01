@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\BranchOffice;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -17,11 +18,13 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::all();
+        $users = User::where('id','!=',auth()->user()->id)->get();
         $offices = BranchOffice::all();
+        $role = Role::all();
         return view('user.index',[
             'users' => $users,
             'officess' => $offices,
+            'puestos' => $role
         ]);
     }
 
@@ -47,8 +50,9 @@ class UserController extends Controller
         try {
             DB::beginTransaction();
             $user = User::create($request->all());
+            $user->role()->attach($request->role_id);
             DB::commit();
-            return redirect()->route('users');
+            return redirect()->route('users')->with('mensaje',"El usuario $request->name se a creado con exito");
         } catch (\Error $th) {
             DB::rollBack();
             return $th;

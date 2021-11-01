@@ -6,7 +6,7 @@
                     Usuarios
                 </h2>
             </div>
-            <div class="col">
+            <div class="col float-right">
                 <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-outline-success">
                     <i class="bi bi-pencil">Crear Usuario</i>
                 </button>
@@ -25,6 +25,7 @@
                                 <th>Nombre</th>
                                 <th>Correo</th>
                                 <th>Dirección</th>
+                                <th>Puesto</th>
                                 <th>Oficina</th>
                                 <th>Acciones</th>
                             </tr>
@@ -36,11 +37,22 @@
                                     <td>{{$user->name}}</td>
                                     <td>{{$user->email}}</td>
                                     <td>{{$user->address}}</td>
+                                   <td> @foreach ($user->role as $rol)
+                                        {{$rol->name}}
+                                    @endforeach
+                                    </td>
                                     <td>{{$user->office->name}}</td>
                                     <td>
                                         <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal{{$user->id}}" class="btn btn-outline-success">
                                             <i class="bi bi-pencil"></i>
                                         </button>
+                                        <form action="" method="Post" class="d-inline" id="eliminar">
+                                            @csrf
+                                            @method('Delete')
+                                        <button type="button"  class="btn btn-outline-danger" >
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                        </form>
                                     </td>
                                 </tr>
                                 <!-- Modal -->
@@ -151,6 +163,18 @@
                                     <div class="row">
                                         <div class="col">
                                             <div class="form-group">
+                                                <label for="">Puesto</label>
+                                                <select name="role_id" id="" class="form-control">
+                                                    <option value="0" selected disabled>Selecciona un puesto para el usuario</option>
+                                                    @forelse ($puestos as $puesto)
+                                                        <option value="{{$puesto->id}}">{{$puesto->name}}</option>
+                                                    @empty
+
+                                                    @endforelse
+                                                </select>
+                                            </div>
+                                        <div class="col">
+                                            <div class="form-group">
                                                 <label for="">Oficina</label>
                                                 <select name="branch_office_id" id="" class="form-control">
                                                     @forelse ($officess as $office)
@@ -164,8 +188,8 @@
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                    <button type="submit" class="btn btn-primary">Save changes</button>
+                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                                    <button type="submit" class="btn btn-success">Crear</button>
                                 </div>
                             </form>
                         </div>
@@ -174,6 +198,7 @@
             </div>
         </div>
     </div>
+    
 </x-app-layout>
 
 

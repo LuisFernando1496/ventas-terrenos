@@ -26,40 +26,55 @@
 
     <!-- Scripts -->
     <script src="{{ mix('js/app.js') }}" defer></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="js/outElement.js"></script>
 </head>
 
 <body class="font-sans antialiased">
     <x-jet-banner />
 
     <div class="min-h-screen bg-gray-100">
-       
 
 
 
- <div class="flex min-h-scree">
-     <div >
-       @livewire('sidebar-nav-bar')
-    </div>
-    <div class="flex-1">
-         @livewire('navigation-menu')
-                        @if (isset($header))
-                            <header class="bg-white shadow  ">
-                                <div class="max-w-7xl mx-auto py-3 px-4 sm:px-6 lg:px-8">
-                                    {{ $header }}
-                                </div>
-                            </header>
-                        @endif
 
+        <div class="flex min-h-scree">
+            <div>
+                @livewire('sidebar-nav-bar')
+            </div>
+            <div class="flex-1">
+                @livewire('navigation-menu')
+                @if (isset($header))
+                    <header class="bg-white shadow  ">
+                        <div class="max-w-7xl mx-auto py-3 px-4 sm:px-6 lg:px-8">
+                            {{ $header }}
+                        </div>
+                    </header>
+                @endif
+                @if(session('mensaje'))
+                <div class="bg-green-100 border-t border-b border-green-500 text-green-700 px-4 py-3" id="mensaje" role="alert">
+                    <p class="font-bold">Mensaje</p>
+                    <p class="text-sm">{{session('mensaje')}}</p>
+                    
+                </div>
+                @elseif(session('error'))
+                <div class="bg-red-100 border-t border-b border-red-500 text-red-700 px-4 py-3" id="error" role="alert">
+                    <p class="font-bold">Error</p>
+                    <p class="text-sm">{{session('Error')}}</p>
+                    
+                </div>
+                @endif
+               
 
-                        <!-- Page Content -->
-                        <main >
-                            {{ $slot }}
-                        </main>
-    </div>
+                <!-- Page Content -->
+                <main>
+                    {{ $slot }}
+                </main>
+            </div>
             <!-- Page Heading -->
-           
+
+        </div>
     </div>
-  </div>
 
 
 

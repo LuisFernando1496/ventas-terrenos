@@ -28,7 +28,8 @@ class User extends Authenticatable
         'email',
         'password',
         'address',
-        'branch_office_id'
+        'branch_office_id',
+        
     ];
 
     /**
@@ -65,4 +66,11 @@ class User extends Authenticatable
     {
         return $this->belongsTo(BranchOffice::class,'branch_office_id');
     }
+    public function role()
+  {
+    return $this->belongsToMany(Role::class)->withPivot('user_id')->withTimestamps();
+  }
+  public function findRole($slug){
+    return in_array($slug, $this->role->pluck('slug')->toArray());
+  }
 }
