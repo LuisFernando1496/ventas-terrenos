@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\BranchOffice;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
@@ -14,7 +16,12 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        $productos = Product::all();
+        $offices = BranchOffice::all();
+        return view('products.index',[
+            'productos' => $productos,
+            'officess' => $offices
+        ]);
     }
 
     /**
@@ -35,7 +42,15 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            DB::beginTransaction();
+            $producto = Product::create($request->all());
+            DB::commit();
+            return redirect()->route('productos');
+        } catch (\Error $th) {
+            DB::rollBack();
+            return $th;
+        }
     }
 
     /**
@@ -69,7 +84,15 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        //
+        try {
+            DB::beginTransaction();
+            DB::table('products')->where('id','=',$product->id)->update($request->all());
+            DB::commit();
+            return redirect()->route('productos');
+        } catch (\Error $th) {
+            DB::rollBack();
+            return $th;
+        }
     }
 
     /**

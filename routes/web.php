@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BranchOfficeController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -30,3 +31,7 @@ Route::middleware(['auth:sanctum','verified'])->patch('/users/{user}',[UserContr
 Route::middleware(['auth:sanctum','verified'])->get('/sucursales',[BranchOfficeController::class,'index'])->name('sucursales');
 Route::middleware(['auth:sanctum','verified'])->post('/sucursales',[BranchOfficeController::class,'store'])->name('sucursales.store');
 Route::middleware(['auth:sanctum','verified'])->patch('/sucursales/{sucursal}',[BranchOfficeController::class,'update'])->name('sucursales.update');
+
+Route::middleware(['auth:sanctum','verified'])->get('/productos',[ProductController::class,'index'])->name('productos');
+Route::middleware(['auth:sanctum','verified'])->post('/productos',[ProductController::class,'store'])->name('productos.store');
+Route::middleware(['auth:sanctum','verified'])->patch('/productos/{producto}',[ProductController::class,'update'])->name('productos.update');
