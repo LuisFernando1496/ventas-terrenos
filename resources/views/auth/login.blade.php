@@ -2,7 +2,7 @@
     @livewire('navigation-menu')
     <x-jet-authentication-card >
         <x-slot name="logo">
-            <img src="{{asset('img/logo_inusual.png')}}" alt="">
+            <img src="{{asset('img/roven-capital.jpeg')}}" style="height: 200px;width: 200px;" alt="roven-capital">
         </x-slot>
 
         <x-jet-validation-errors class="mb-4" />

@@ -1,17 +1,12 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="row">
-            <div class="col">
-                <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                    Usuarios
-                </h2>
-            </div>
-            <div class="col float-right">
-                <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-outline-success">
-                    <i class="bi bi-pencil">Crear Usuario</i>
-                </button>
-            </div>
-        </div>
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            Usuarios
+            <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal"
+            class="font-semibold btn btn-outline-success  float-right">
+            <i class="bi bi-pencil">Crear Usuarios</i>
+        </button>
+         </h2>
     </x-slot>
 
     <div class="py-12">

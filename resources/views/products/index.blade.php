@@ -1,17 +1,12 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="row">
-            <div class="col">
-                <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                    Productos
-                </h2>
-            </div>
-            <div class="col">
-                <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-outline-success">
-                    <i class="bi bi-pencil">Crear producto</i>
-                </button>
-            </div>
-        </div>
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            Productos
+            <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal"
+            class="font-semibold btn btn-outline-success  float-right">
+            <i class="bi bi-pencil">Crear Productos</i>
+        </button>
+         </h2>
     </x-slot>
 
     <div class="py-12">
@@ -22,57 +17,134 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Nombre</th>
+                                <th>No. barras</th>
+                                <th>Lote</th>
+                                <th>Manzana</th>
+                                <th>Calle</th>
+                                <th>Colonia</th>
+                                <th>Dimenciones(M<sup>2</sup>)</th>
+                                <th>No. terreno</th>
                                 <th>Precio</th>
-                                <th>Codigo de barras</th>
-                                <th>Estatus</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
                             @forelse ($productos as $producto)
                                 <tr>
-                                    <td>{{$producto->id}}</td>
-                                    <td>{{$producto->name}}</td>
-                                    <td>{{$producto->price}}</td>
-                                    <td>{{$producto->bar_code}}</td>
-                                    <td>{{$producto->status}}</td>
+                                    <td>{{ $producto->id }}</td>
+                                    <td>{{ $producto->bar_code }}</td>
+                                    <td>{{ $producto->lote}}</td>
+                                    <td>{{ $producto->manzana }}</td>
+                                    <td>{{ $producto->calle }}</td>
+                                    <td>{{ $producto->colonia }}</td>
+                                    <td>{{ $producto->dimenciones }}</td>
+                                    <td>{{ $producto->numero_terreno }}</td>
+                                    <td>$ {{ $producto->price }}</td>
                                     <td>
-                                        <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal{{$producto->id}}" class="btn btn-outline-success">
+                                        <button type="button" data-bs-toggle="modal"
+                                            data-bs-target="#exampleModal{{ $producto->id }}"
+                                            class="btn btn-outline-success">
                                             <i class="bi bi-pencil"></i>
                                         </button>
+                                        <form action="{{route('productos.supr',$producto)}}" method="Post" class="d-inline" id="eliminar">
+                                            @csrf
+                                             @method('PATCH')
+                                        <button type="submit"  class="btn btn-outline-danger" >
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                        </form>
+
                                     </td>
                                 </tr>
                                 <!-- Modal -->
-                                <div class="modal fade" id="exampleModal{{$producto->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal fade" id="exampleModal{{ $producto->id }}" tabindex="-1"
+                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
-                                            <form action="{{route('productos.update',$producto)}}" method="POST">
+                                            <form action="{{ route('productos.update', $producto) }}" method="POST">
                                                 @csrf @method('PATCH')
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">Editar producto {{$producto->name}}</h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    <h5 class="modal-title" id="exampleModalLabel">Editar producto
+                                                        {{ $producto->name }}</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
                                                     <div class="row">
                                                         <div class="col">
                                                             <div class="form-group">
-                                                                <label for="">Nombre</label>
-                                                                <input type="text" class="form-control" name="name" value="{{ old('name',$producto->name) }}">
+                                                                <label for="">Codigo de barra</label>
+                                                                <input type="text" class="form-control" name="bar_code" value="{{$producto->bar_code}}" required> 
+                                                            </div>
+                                                        </div>
+                                                        <div class="col">
+                                                            <div class="form-group">
+                                                                <label for="">Lote</label>
+                                                                <input type="text" class="form-control" name="lote" value="{{$producto->lote}}" required>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="row">
                                                         <div class="col">
                                                             <div class="form-group">
-                                                                <label for="">Dirección</label>
-                                                                <textarea name="address" id="" cols="30" rows="2" class="form-control">{{$producto->id}}</textarea>
+                                                                <label for="">Manzana</label>
+                                                                <input type="text" class="form-control" name="manzana" value="{{$producto->manzana}}" required> 
+                                                            </div>
+                                                        </div>
+                                                        <div class="col">
+                                                            <div class="form-group">
+                                                                <label for="">Calle</label>
+                                                                <input type="text" class="form-control" name="calle" value="{{$producto->calle}}" required>
                                                             </div>
                                                         </div>
                                                     </div>
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <div class="form-group">
+                                                                <label for="">Dimenciones(M<sup>2</sup>)</label>
+                                                                <input type="text" class="form-control" name="dimenciones" value="{{$producto->dimenciones}}" required> 
+                                                            </div>
+                                                        </div>
+                                                        <div class="col">
+                                                            <div class="form-group">
+                                                                <label for="">Colonia</label>
+                                                                <input type="text" class="form-control" name="colonia" value="{{$producto->colonia}}" required>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <div class="form-group">
+                                                                <label for="">Numero de terreno</label>
+                                                                <input type="text" class="form-control" name="numero_terreno" value="{{$producto->numero_terreno}}" required> 
+                                                            </div>
+                                                        </div>
+                                                        <div class="col">
+                                                            <div class="form-group">
+                                                                <label for="">Precio</label>
+                                                                <input type="number" step="any" name="price" class="form-control" value="{{$producto->price}}" id="" required>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                   
+                                                    <div class="col">
+                                                        <div class="form-group">
+                                                            <label for="">Oficina</label>
+                                                            <select name="branch_office_id" id="" class="form-control" required>
+                                                                <option value="{{$producto->branch_office_id}}">{{$producto->branch_office->name}}</option>
+                                                                @forelse ($officess as $office)
+                                                                    <option value="{{ $office->id }}">{{ $office->name }}</option>
+                                                                @empty
+                
+                                                                @endforelse
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-bs-dismiss="modal">Close</button>
                                                     <button type="submit" class="btn btn-primary">Save changes</button>
                                                 </div>
                                             </form>
@@ -85,56 +157,95 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
-                            <form action="{{route('productos.store')}}" method="POST">
+                            <form action="{{ route('productos.store') }}" method="POST">
                                 @csrf
-                                _token
+
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Crear Terreno</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    <h5 class="modal-title" id="exampleModalLabel">Crear Producto</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
                                 </div>
-                                <div class="modal-body">
+                                
+                               
+                                 <div class="modal-body">
                                     <div class="row">
-                                        <div class="col">
-                                            <div class="form-group">
-                                                <label for="">Nombre</label>
-                                                <input type="text" class="form-control" name="name">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col">
-                                            <div class="form-group">
-                                                <label for="">Precio</label>
-                                                <input type="number" name="price" class="form-control" id="">
-                                            </div>
-                                        </div>
                                         <div class="col">
                                             <div class="form-group">
                                                 <label for="">Codigo de barra</label>
-                                                <input type="text" class="form-control" name="bar_code">
+                                                <input type="text" class="form-control" name="bar_code" required> 
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label for="">Lote</label>
+                                                <input type="text" class="form-control" name="lote" required>
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label for="">Manzana</label>
+                                                <input type="text" class="form-control" name="manzana" required> 
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label for="">Calle</label>
+                                                <input type="text" class="form-control" name="calle" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label for="">Dimenciones(M<sup>2</sup>)</label>
+                                                <input type="text" class="form-control" name="dimenciones" required> 
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label for="">Colonia</label>
+                                                <input type="text" class="form-control" name="colonia" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label for="">Numero de terreno</label>
+                                                <input type="text" class="form-control" name="numero_terreno" required> 
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label for="">Precio</label>
+                                                <input type="number" step="any" name="price" class="form-control" id="" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                   
                                     <div class="col">
                                         <div class="form-group">
                                             <label for="">Oficina</label>
-                                            <select name="branch_office_id" id="" class="form-control">
+                                            <select name="branch_office_id" id="" class="form-control" required>
                                                 @forelse ($officess as $office)
-                                                    <option value="{{$office->id}}">{{$office->name}}</option>
+                                                    <option value="{{ $office->id }}">{{ $office->name }}</option>
                                                 @empty
 
                                                 @endforelse
                                             </select>
                                         </div>
                                     </div>
-                                    
+
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                    <button type="submit" class="btn btn-primary">Save changes</button>
+                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-success">Save changes</button>
                                 </div>
                             </form>
                         </div>

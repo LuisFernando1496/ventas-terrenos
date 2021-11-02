@@ -8,4 +8,23 @@ use Illuminate\Database\Eloquent\Model;
 class Client extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'name',
+        'last_name',
+        'email',
+        'phonenumber',
+        'rfc',
+        'address_id',
+        'user_add_id',
+        'status'
+    ];
+
+    public function direccion(){
+        return $this->hasOne(Address::class,'id','address_id');
+    }
+
+    public function agregado()
+    {
+        return $this->hasOne(User::class);
+    }
 }

@@ -16,7 +16,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $productos = Product::all();
+        $productos = Product::where('status',1)->get();
         $offices = BranchOffice::all();
         return view('products.index',[
             'productos' => $productos,
@@ -86,9 +86,9 @@ class ProductController extends Controller
     {
         try {
             DB::beginTransaction();
-            DB::table('products')->where('id','=',$product->id)->update($request->all());
+            $product->update($request->all());
             DB::commit();
-            return redirect()->route('productos');
+            return redirect()->route('productos')->with('mensaje',"El terreno $request->bar_code se a actualizado");
         } catch (\Error $th) {
             DB::rollBack();
             return $th;
@@ -101,6 +101,24 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
+
+     public function supr(Request $request, Product $product){
+        
+        try {
+            DB::beginTransaction();
+            $product->update(
+               [ 
+                   'status'=> false
+               ]
+            );
+            DB::commit();
+            return redirect()->route('productos')->with('mensaje',"El terreno $product->bar_code se a Eliminado");
+        } catch (\Error $th) {
+            DB::rollBack();
+            return $th;
+        }
+
+     }
     public function destroy(Product $product)
     {
         //

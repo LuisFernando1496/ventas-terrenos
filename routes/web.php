@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BranchOfficeController;
+use App\Http\Controllers\ClientController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
@@ -34,4 +35,10 @@ Route::middleware(['auth:sanctum','verified'])->patch('/sucursales/{sucursal}',[
 
 Route::middleware(['auth:sanctum','verified'])->get('/productos',[ProductController::class,'index'])->name('productos');
 Route::middleware(['auth:sanctum','verified'])->post('/productos',[ProductController::class,'store'])->name('productos.store');
-Route::middleware(['auth:sanctum','verified'])->patch('/productos/{producto}',[ProductController::class,'update'])->name('productos.update');
+Route::middleware(['auth:sanctum','verified'])->patch('/productos/{product}',[ProductController::class,'update'])->name('productos.update');
+Route::middleware(['auth:sanctum','verified'])->patch('/productos/delete/{product}',[ProductController::class,'supr'])->name('productos.supr');
+
+Route::middleware(['auth:sanctum','verified'])->get('/clients',[ClientController::class,'index'])->name('clients');
+Route::middleware(['auth:sanctum','verified'])->post('/clients',[ClientController::class,'store'])->name('clients.store');
+Route::middleware(['auth:sanctum','verified'])->patch('/clients/{client}',[ClientController::class,'update'])->name('clients.update');
+Route::middleware(['auth:sanctum','verified'])->patch('/clients/delete/{client}',[ClientController::class,'supr'])->name('clients.supr');

@@ -15,8 +15,12 @@ class CreateProductsTable extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->integer('stock')->nullable();
+            $table->string('lote');
+            $table->string('manzana');
+            $table->string('calle');
+            $table->string('dimenciones');
+            $table->string('colonia');
+            $table->string('numero_terreno');
             $table->decimal('price',8,2);
             $table->string('bar_code');
             $table->boolean('status')->default(true);
