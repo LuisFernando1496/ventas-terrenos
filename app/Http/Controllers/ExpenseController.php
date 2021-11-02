@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Expense;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ExpenseController extends Controller
 {
@@ -14,7 +15,8 @@ class ExpenseController extends Controller
      */
     public function index()
     {
-        //
+        $pagos = Expense::where('status',1)->get();
+        return view('expense.index',['pagos'=>$pagos]);
     }
 
     /**
@@ -35,7 +37,15 @@ class ExpenseController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            DB::beginTransaction();
+            $expense = Expense::create($request->all());
+            DB::commit();
+            return redirect()->route('pagos');
+        } catch (\Error $th) {
+            DB::rollBack();
+            return $th;
+        }
     }
 
     /**
@@ -69,7 +79,15 @@ class ExpenseController extends Controller
      */
     public function update(Request $request, Expense $expense)
     {
-        //
+        try {
+            DB::beginTransaction();
+            $expense->update($request->all());
+            DB::commit();
+            return redirect()->route('pagos')->with('mensaje',"El pago $request->name_expenditure se a actualizado");
+        } catch (\Error $th) {
+            DB::rollBack();
+            return $th;
+        }
     }
 
     /**
@@ -78,6 +96,22 @@ class ExpenseController extends Controller
      * @param  \App\Models\Expense  $expense
      * @return \Illuminate\Http\Response
      */
+    public function supr(Expense $expense){
+        try {
+            BD::beginTransaction();
+            $expense->update(
+                [ 
+                    'status'=> false
+                ]
+             );
+            BD::commit();
+            return redirect()->route('pagos')->with('mensaje',"El pago se a Eliminado");
+        } catch (\Error $th) {
+            DB::rollBack();
+            return $th;
+        }
+    }
+
     public function destroy(Expense $expense)
     {
         //
