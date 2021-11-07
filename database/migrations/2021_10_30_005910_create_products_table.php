@@ -26,6 +26,8 @@ class CreateProductsTable extends Migration
             $table->boolean('status')->default(true);
             $table->unsignedBigInteger('branch_office_id')->nullable();
             $table->foreign('branch_office_id')->references('id')->on('branch_offices')->onDelete('cascade');
+            $table->unsignedBigInteger('project_id')->nullable();
+            $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');
             $table->timestamps();
             // $table->integer('minimun_stock')->nullable();
             // $table->decimal('cost',8,2);

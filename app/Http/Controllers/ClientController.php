@@ -44,7 +44,7 @@ class ClientController extends Controller
             $request['user_add_id']=auth()->user()->id;
             $client = Client::create($request->all());
             DB::commit();
-            return redirect()->route('clientes')->with('mensaje',"El Cliente $request->name se a Creado");
+            return redirect()->route('clients')->with('mensaje',"El Cliente $request->name se a Creado");
         } catch (\Error $th) {
             DB::rollBack();
             return $th;
