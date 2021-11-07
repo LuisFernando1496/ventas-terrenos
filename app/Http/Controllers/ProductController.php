@@ -24,6 +24,12 @@ class ProductController extends Controller
         ]);
     }
 
+    public function ajax($id)
+    {
+        $product = Product::findOrFail($id);
+        return response()->json($product);
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -103,11 +109,11 @@ class ProductController extends Controller
      */
 
      public function supr(Request $request, Product $product){
-        
+
         try {
             DB::beginTransaction();
             $product->update(
-               [ 
+               [
                    'status'=> false
                ]
             );

@@ -21,7 +21,7 @@ class CreateProductsTable extends Migration
             $table->string('dimenciones');
             $table->string('colonia');
             $table->string('numero_terreno');
-            $table->decimal('price',8,2);
+            $table->double('price');
             $table->string('bar_code');
             $table->boolean('status')->default(true);
             $table->unsignedBigInteger('branch_office_id')->nullable();
