@@ -6,6 +6,7 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ExpenseController;
+use App\Http\Controllers\PurchaseController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -55,3 +56,9 @@ Route::middleware(['auth:sanctum','verified'])->get('/bussinesUnit',[BusinessUni
 Route::middleware(['auth:sanctum','verified'])->post('/bussinesUnit',[BusinessUnitController::class,'store'])->name('bussinesUnit.store');
 Route::middleware(['auth:sanctum','verified'])->patch('/bussinesUnit/{expense}',[BusinessUnitController::class,'update'])->name('bussinesUnit.update');
 Route::middleware(['auth:sanctum','verified'])->patch('/bussinesUnit/delete/{expense}',[BusinessUnitController::class,'supr'])->name('bussinesUnit.supr');
+
+Route::middleware(['auth:sanctum','verified'])->get('/compras',[PurchaseController::class,'index'])->name('purchase');
+Route::middleware(['auth:sanctum','verified'])->post('/compras',[PurchaseController::class,'store'])->name('purchase.store');
+Route::middleware(['auth:sanctum','verified'])->patch('/compras/{purchase}',[PurchaseController::class,'update'])->name('purchase.update');
+Route::middleware(['auth:sanctum','verified'])->delete('/compras/{purchase}',[PurchaseController::class,'destroy'])->name('purchase.delete');
+Route::get('/productos-ajax/{id}',[ProductController::class,'ajax']);

@@ -15,6 +15,14 @@ class CreatePurchasesTable extends Migration
     {
         Schema::create('purchases', function (Blueprint $table) {
             $table->id();
+            $table->string('title');
+            $table->longText('description');
+            $table->double('price');
+            $table->integer('quantity')->default(1);
+            $table->unsignedBigInteger('product_id')->nullable();
+            $table->foreign('product_id')->references('id')->on('products')->onUpdate('cascade');
+            $table->boolean('status')->default(true);
+            $table->double('total');
             $table->timestamps();
         });
     }
