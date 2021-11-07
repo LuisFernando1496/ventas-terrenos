@@ -28,7 +28,11 @@
                         </thead>
                         <tbody>
                             @forelse ($purchases as $purchase)
-                                <tr>
+                                @if ($purchase->status == true)
+                                    <tr>
+                                @else
+                                    <tr class="table-danger">
+                                @endif
                                     <td>{{ $purchase->id }}</td>
                                     <td>{{ $purchase->title }}</td>
                                     <td>{{ $purchase->description }}</td>
@@ -37,6 +41,7 @@
                                     <td>{{ $purchase->quantity }}</td>
                                     <td>{{ $purchase->total}}</td>
                                     <td>
+                                        @if ($purchase->status == true)
                                         <button type="button" data-bs-toggle="modal"
                                             data-bs-target="#exampleModal{{ $purchase->id }}"
                                             class="btn btn-outline-success">
@@ -44,11 +49,15 @@
                                         </button>
                                         <form action="{{route('purchase.delete',$purchase)}}" method="Post" class="d-inline" id="eliminar">
                                             @csrf
-                                             @method('PATCH')
+                                            @method('DELETE')
                                             <button type="submit"  class="btn btn-outline-danger" >
                                                 <i class="bi bi-trash"></i>
                                             </button>
                                         </form>
+                                        @else
+                                            Cancelado
+                                        @endif
+
 
                                     </td>
                                 </tr>

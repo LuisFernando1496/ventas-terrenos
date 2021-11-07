@@ -1,6 +1,6 @@
 <div class="min-h-screen flex flex-row bg-gray-100">
-    <div class="flex flex-col w-44 bg-white rounded-r-3xl overflow-hidden">
-        <div class="flex items-center justify-center h-32 shadow-md">
+    <div class="flex flex-col w-44 bg-white  overflow-hidden">
+        <div class="flex items-center justify-center h-32 shadow-md" style="background-color: black">
             <div class="w-4xl  "><img src="{{ asset('img/roven-capital.jpeg') }}" style="height: 125px;width: 128px;" alt=""></div>
         </div>
         <ul class="flex flex-col py-4">
