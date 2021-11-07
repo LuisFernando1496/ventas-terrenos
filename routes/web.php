@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BranchOfficeController;
+use App\Http\Controllers\BusinessUnitController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
@@ -45,10 +46,16 @@ Route::middleware(['auth:sanctum','verified'])->post('/clients',[ClientControlle
 Route::middleware(['auth:sanctum','verified'])->patch('/clients/{client}',[ClientController::class,'update'])->name('clients.update');
 Route::middleware(['auth:sanctum','verified'])->patch('/clients/delete/{client}',[ClientController::class,'supr'])->name('clients.supr');
 
+//gastos
 Route::middleware(['auth:sanctum','verified'])->get('/pagos',[ExpenseController::class,'index'])->name('pagos');
 Route::middleware(['auth:sanctum','verified'])->post('/pagos',[ExpenseController::class,'store'])->name('pagos.store');
 Route::middleware(['auth:sanctum','verified'])->patch('/pagos/{expense}',[ExpenseController::class,'update'])->name('pagos.update');
 Route::middleware(['auth:sanctum','verified'])->patch('/pagos/delete/{expense}',[ExpenseController::class,'supr'])->name('pagos.supr');
+
+Route::middleware(['auth:sanctum','verified'])->get('/bussinesUnit',[BusinessUnitController::class,'index'])->name('bussinesUnit');
+Route::middleware(['auth:sanctum','verified'])->post('/bussinesUnit',[BusinessUnitController::class,'store'])->name('bussinesUnit.store');
+Route::middleware(['auth:sanctum','verified'])->patch('/bussinesUnit/{expense}',[BusinessUnitController::class,'update'])->name('bussinesUnit.update');
+Route::middleware(['auth:sanctum','verified'])->patch('/bussinesUnit/delete/{expense}',[BusinessUnitController::class,'supr'])->name('bussinesUnit.supr');
 
 Route::middleware(['auth:sanctum','verified'])->get('/compras',[PurchaseController::class,'index'])->name('purchase');
 Route::middleware(['auth:sanctum','verified'])->post('/compras',[PurchaseController::class,'store'])->name('purchase.store');

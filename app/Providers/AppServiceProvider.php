@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Providers;
+
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
@@ -23,6 +25,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Carbon::setLocale('es');
+        setlocale(LC_TIME,'es_ES');
     }
 }
