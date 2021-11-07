@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BusinessUnit;
 use App\Models\Project;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ProjectController extends Controller
 {
@@ -14,7 +17,10 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        //
+        $proyectos = Project::where('status',true)->get();
+        $managers = User::all();
+        $unidades = BusinessUnit::where('status',true)->get();
+        return view('projects.index',['proyectos'=>$proyectos,'managers'=>$managers,'unidades'=>$unidades]);
     }
 
     /**
@@ -27,15 +33,18 @@ class ProjectController extends Controller
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+  
     public function store(Request $request)
     {
-        //
+        try {
+            DB::beginTransaction();
+            $proyecto= Project::create($request->all());
+            DB::commit();
+            return redirect()->route('projects')->with('mensaje',"El proyecto $request->name se a Creado");
+        } catch (\Error $th) {
+            DB::rollBack();
+            return $th;
+        }
     }
 
     /**
@@ -69,15 +78,35 @@ class ProjectController extends Controller
      */
     public function update(Request $request, Project $project)
     {
-        //
+        try {
+            DB::beginTransaction();
+            $project->update($request->all());
+            DB::commit();
+            return redirect()->route('projects')->with('mensaje',"El proyecto $request->name se a Actualizado");
+        } catch (\Error $th) {
+            DB::rollBack();
+            return $th;
+        }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Project  $project
-     * @return \Illuminate\Http\Response
-     */
+   
+    public function supr( Project $project){
+        
+        try {
+            DB::beginTransaction();
+            $project->update(
+               [ 
+                   'status'=> false
+               ]
+            );
+            DB::commit();
+            return redirect()->route('projects')->with('mensaje',"El proyecto $project->name se a Eliminado");
+        } catch (\Error $th) {
+            DB::rollBack();
+            return $th;
+        }
+
+     }
     public function destroy(Project $project)
     {
         //

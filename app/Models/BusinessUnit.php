@@ -12,12 +12,11 @@ class BusinessUnit extends Model
         'photo',
         'name',
         'description',
-        'address_id',
         'status',
     ];
 
     public function projects()
     {
-        return $this->hasMany(Project::class,'project_id');
+        return $this->hasMany(Project::class);
     }
 }

@@ -19,12 +19,17 @@ class Project extends Model
 
     public function bussinesUnit()
     {
-        return $this->belongsTo(bussinesUnit::class);
+        return $this->belongsTo(BusinessUnit::class,'business_unit_id');
     }
 
     public function manager()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class,'manager_user_id');
+    }
+
+    public function products()//relacion inversa echa correctamente
+    {
+        return $this->hasMany(Product::class);
     }
 
 }

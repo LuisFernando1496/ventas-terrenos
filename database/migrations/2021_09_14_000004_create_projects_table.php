@@ -19,7 +19,7 @@ class CreateProjectsTable extends Migration
             $table->text('description');
             $table->enum('progress',['Apertura','Asignado', 'En-movimientos','Terminado'])->default('Apertura');
             $table->boolean('status')->default(true);
-            $table->unsignedBigInteger('manager_user_id');
+            $table->unsignedBigInteger('manager_user_id')->nullable();
             $table->foreign('manager_user_id')->references('id')->on('users')->onDelete('cascade');
             $table->unsignedBigInteger('business_unit_id')->nullable();
             $table->foreign('business_unit_id')->references('id')->on('business_units')->onDelete('cascade');

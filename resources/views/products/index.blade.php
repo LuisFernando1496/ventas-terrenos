@@ -16,7 +16,7 @@
                     <table class="table table-hover">
                         <thead>
                             <tr>
-                                <th>ID</th>
+                             
                                 <th>No. barras</th>
                                 <th>Lote</th>
                                 <th>Manzana</th>
@@ -25,13 +25,14 @@
                                 <th>Dimenciones(M<sup>2</sup>)</th>
                                 <th>No. terreno</th>
                                 <th>Precio</th>
+                                <th>Proyecto</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
                             @forelse ($productos as $producto)
                                 <tr>
-                                    <td>{{ $producto->id }}</td>
+                                   
                                     <td>{{ $producto->bar_code }}</td>
                                     <td>{{ $producto->lote}}</td>
                                     <td>{{ $producto->manzana }}</td>
@@ -40,6 +41,7 @@
                                     <td>{{ $producto->dimenciones }}</td>
                                     <td>{{ $producto->numero_terreno }}</td>
                                     <td>$ {{ $producto->price }}</td>
+                                    <td>{{ $producto->project->name }}</td>
                                     <td>
                                         <button type="button" data-bs-toggle="modal"
                                             data-bs-target="#exampleModal{{ $producto->id }}"
@@ -141,6 +143,19 @@
                                                         </div>
                                                     </div>
                 
+                                                    <div class="row">
+                                                        <div class="form-group">
+                                                            <label for="">Proyecto</label>
+                                                            <select name="project_id" id="" class="form-control" required>
+                                                                <option value="{{ $producto->project_id }}" >{{ $producto->project_id }}</option>
+                                                         @forelse ($proyectos as $proyecto)
+                                                                    <option value="{{ $proyecto->id }}">{{ $proyecto->name }}</option>
+                                                                @empty
+                
+                                                                @endforelse
+                                                            </select>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary"
@@ -229,6 +244,7 @@
                                         </div>
                                     </div>
                                    
+                                   
                                     <div class="col">
                                         <div class="form-group">
                                             <label for="">Oficina</label>
@@ -241,11 +257,24 @@
                                             </select>
                                         </div>
                                     </div>
+                                    
+                                    <div class="row">
+                                        <div class="form-group">
+                                            <label for="">Proyecto</label>
+                                            <select name="project_id" id="" class="form-control" required>
+                                                <option value="0" selected disabled>Seleciona el proyecto al que pertenece</option>
+                                                @forelse ($proyectos as $proyecto)
+                                                    <option value="{{ $proyecto->id }}">{{ $proyecto->name }}</option>
+                                                @empty
 
+                                                @endforelse
+                                            </select>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                                    <button type="submit" class="btn btn-success">Save changes</button>
+                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+                                    <button type="submit" class="btn btn-success">Guardar</button>
                                 </div>
                             </form>
                         </div>

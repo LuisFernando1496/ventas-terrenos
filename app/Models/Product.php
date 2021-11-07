@@ -18,9 +18,15 @@ class Product extends Model{
         'price',
         'bar_code',
         'branch_office_id',
-        'status'
+        'status',
+        'project_id'
     ];
     public function branch_office(){
         return $this->belongsTo(BranchOffice::class);
+    }
+
+    public function project()
+    {
+        return $this->belongsTo(Project::class,'project_id');
     }
 }

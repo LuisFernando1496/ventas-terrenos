@@ -90,15 +90,49 @@ class BusinessUnitController extends Controller
      */
     public function update(Request $request, BusinessUnit $businessUnit)
     {
-        //
+        if($request->imagen)
+        {
+           
+            $url = str_replace('storage','public',$businessUnit->photo);
+            Storage::delete($url);
+            $imagenNombre = $request->imagen->getClientOriginalName();
+            $imagen = $request->file('imagen');
+            Storage::disk('public')->put("imagenUnits/$imagenNombre",  file($imagen));
+            $imagen= Storage::url("imagenUnits/$imagenNombre");
+        }
+        else {
+            $imagen = $businessUnit->photo;
+        }
+        try {
+            DB::beginTransaction();
+            $request['photo'] = $imagen;
+            $businessUnit->update($request->all());
+         DB::commit();
+            return redirect()->route('bussinesUnit')->with('mensaje',"La unidad de negocio $request->name se a Editado");
+        } catch (\Error $th) {
+            DB::rollBack();
+            return $th;
+        }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\BusinessUnit  $businessUnit
-     * @return \Illuminate\Http\Response
-     */
+    public function supr( BusinessUnit $businessUnit){
+        
+        try {
+            DB::beginTransaction();
+            $businessUnit->update(
+               [ 
+                   'status'=> false
+               ]
+            );
+            DB::commit();
+            return redirect()->route('bussinesUnit')->with('mensaje',"La unidad de negocio $businessUnit->name se a Eliminado");
+        } catch (\Error $th) {
+            DB::rollBack();
+            return $th;
+        }
+
+     }
+
     public function destroy(BusinessUnit $businessUnit)
     {
         //

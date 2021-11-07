@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Models\BranchOffice;
+use App\Models\BusinessUnit;
+use App\Models\Project;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -18,10 +20,13 @@ class ProductController extends Controller
     {
         $productos = Product::where('status',1)->get();
         $offices = BranchOffice::all();
+        $proyectos = Project::where('status',true)->get();
         return view('products.index',[
             'productos' => $productos,
-            'officess' => $offices
-        ]);
+            'officess' => $offices,
+            'proyectos'=> $proyectos,
+        ]); 
+        
     }
 
     public function ajax($id)
