@@ -70,6 +70,7 @@ class PurchaseController extends Controller
                 DB::commit();
                 return redirect()->route('purchase');
             } catch (\Error $th) {
+                DB::rollBack();
                 return $th;
             }
 
@@ -89,6 +90,7 @@ class PurchaseController extends Controller
                 DB::commit();
                 return redirect()->route('purchase');
             } catch (\Error $th) {
+                DB::rollBack();
                 return $th;
             }
         }
@@ -107,6 +109,7 @@ class PurchaseController extends Controller
                 DB::commit();
                 return redirect()->route('purchase');
             } catch (\Error $th) {
+                DB::rollBack();
                 return $th;
             }
         }
@@ -143,7 +146,22 @@ class PurchaseController extends Controller
      */
     public function update(Request $request, Purchase $purchase)
     {
-        //
+        try{
+            DB::beginTransaction();
+            $purchase->update([
+                'title' => $request->title,
+                'description' => $request->description,
+                'quantity' => $request->quantity,
+                'total' => $request->total
+            ]);
+            DB::commit();
+            return redirect()->route('purchase');
+        }
+        catch(\Error $th)
+        {
+            DB::rollBack();
+            return $th;
+        }
     }
 
     /**
@@ -154,6 +172,16 @@ class PurchaseController extends Controller
      */
     public function destroy(Purchase $purchase)
     {
-        //
+        try {
+            DB::beginTransaction();
+            $compra = DB::table('purchases')->where('id','=',$purchase->id)->update([
+                'status' => false
+            ]);
+            DB::commit();
+            return redirect()->route('purchase');
+        } catch (\Error $th) {
+            DB::rollBack();
+            return $th;
+        }
     }
 }
