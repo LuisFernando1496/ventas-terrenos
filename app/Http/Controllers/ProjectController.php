@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\BusinessUnit;
 use App\Models\Project;
+use App\Models\ProjectProgress;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -55,7 +56,12 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
-        //
+      
+        $proyecto = $project::where('status',true)
+        ->where('id',$project->id)
+        ->with('investor','products.productInSales','projectProgress')->get();
+       // return $proyecto[0]->projectProgress;
+        return view('projects.ditails',['project'=>$proyecto]); 
     }
 
     /**
@@ -69,13 +75,28 @@ class ProjectController extends Controller
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Project  $project
-     * @return \Illuminate\Http\Response
-     */
+   public function progress(Request $request, Project $project)
+   {
+       //return $project->progress;
+      
+       try {
+                DB::beginTransaction();
+            $progres = ProjectProgress::create([
+                'project_id'=> $project->id,
+                'progresss'=>$request->progresss
+            ]);
+            $proyecto = Project::find($project->id);
+            $proyecto->update([
+                'progress'=>$request->status_progress
+     ]);
+     DB::commit();
+     return redirect()->route('projects')->with('mensaje',"El estatus de proyecto $project->name se a Actualizado");
+    } catch (\Error $th) {
+        DB::rollBack();
+        return $th;
+    }
+    }
+
     public function update(Request $request, Project $project)
     {
         try {

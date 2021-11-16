@@ -23,6 +23,7 @@ class CreateProjectsTable extends Migration
             $table->foreign('manager_user_id')->references('id')->on('users')->onDelete('cascade');
             $table->unsignedBigInteger('business_unit_id')->nullable();
             $table->foreign('business_unit_id')->references('id')->on('business_units')->onDelete('cascade');
+            $table->decimal('total_investment',8,2)->default(0.00);
             $table->timestamps();
         });
     }

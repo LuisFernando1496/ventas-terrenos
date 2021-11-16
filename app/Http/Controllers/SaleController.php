@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Client;
 use App\Models\Product;
+use App\Models\ProductInSale;
 use App\Models\Sale;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class SaleController extends Controller
 {
@@ -21,10 +23,65 @@ class SaleController extends Controller
     {
         //
     }
-
+    public function reprint(Request $request)
+    {
+        
+        $sale = Sale::where('id', $request->sale_id)->with(['branchOffice', 'productsInSale.product'])->first();
+        $client = Client::where('id', '=', $sale->client_id)->first();
+           
+            return view('sale.nota', ['sale' => $sale, 'client' => $client]);
+       
+    }
     public function store(Request $request)
     {
-        //
+       //return response()->json(['success' => true, 'data' => $request->all()]);
+       $sale = $request->all()["sale"];
+       $client = Client::findOrFail($sale['client_id']);
+        $total_cost_sale = 0;
+        // $request['branch_office_id'] = Auth::user()->branch_office_id;
+        $sale['branch_office_id'] = Auth::user()->branch_office_id;
+        // $request['user_id'] = Auth::user()->id;
+        $sale['user_id'] = Auth::user()->id;
+        $sale['client_id'] = $client->id;
+        $sale['total_cost'] = 0;
+
+
+        try {
+            DB::beginTransaction();
+           
+            $sale = new Sale($sale);
+            $sale->save();
+           
+            foreach ($request->all()["products"] as $key => $item) {
+                $product = Product::findOrFail($item['id']);
+               
+              
+                $newProductInSale = [
+                    'product_id' => $item['id'],
+                    'sale_id' => $sale->id,
+                    'quantity' => $item['quantity'],
+                    'subtotal' => $item['subtotal'],
+                    'sale_price' => $item['sale_price'],
+                    'total' => $item['total'],
+                    'total_cost' => $product->price * $item['quantity'],
+                    'discount' => $item['discount'],
+                ];
+               
+                $total_cost_sale = $total_cost_sale + $newProductInSale['total_cost'];
+               
+                $productInSale = new ProductInSale($newProductInSale);
+                $productInSale->save();
+              
+              
+            }
+          
+            DB::commit();
+            return response()->json(['success' => true, 'data' => Sale::where('id', $sale->id)->first()]);
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return response()->json(['success' => false, 'error' => $th]);
+        }
+    
     }
 
     public function show(Sale $sale)
@@ -33,9 +90,10 @@ class SaleController extends Controller
     }
 
    
-    public function edit(Sale $sale)
+    public function historySale()
     {
-        //
+        $sales = Sale::where("status",true)->get();
+        return view('sale.historySale',['sales'=>$sales]);
     }
 
   
@@ -46,24 +104,26 @@ class SaleController extends Controller
 
     public function search(Request $request)
     {
-        $product = Product::where("products.name", "LIKE", "%{$request->search}%")->get();
-
-        if ($product->pluck('category_id')->first() == 1) {
-            $datas = Product::join('categories', 'products.category_id', 'categories.id')
-                ->where("products.name", "LIKE", "%{$request->search}%")
-                ->where("products.stock", ">", 0)->where("products.status", "=", true)
-                ->select('products.*', 'categories.name as category_name', 'categories.id as category_id')
-                ->get();
-        } else {
-            $datas = Product::join('brands', 'products.brand_id', 'brands.id')
-                ->join('categories', 'products.category_id', 'categories.id')
-                ->where("products.name", "LIKE", "%{$request->search}%")
-                ->where("products.stock", ">", 0)->where("products.status", "=", true)
-                ->where('products.branch_office_id', Auth::user()->branch_office_id)
-                ->orWhere("brands.name", "LIKE", "%{$request->search}%")
-                ->select('products.*', 'brands.name as brand_name', 'brands.id as brand_id', 'categories.name as category_name', 'categories.id as category_id')
-                ->get();
-        }
+       
+       
+            $datas = Product::join('projects','products.project_id','projects.id')
+            ->join('business_units','projects.business_unit_id','business_units.id')
+            ->where("products.status", "=", true)
+            ->orWhere("products.colonia", "LIKE", "%{$request->search}%")
+            ->orWhere("business_units.name", "LIKE", "%{$request->search}%")
+            ->orWhere("projects.name", "LIKE", "%{$request->search}%")
+            ->select('products.*', 'products.bar_code as codigo', 
+                    'products.colonia as colonia', 
+                    'products.numero_terreno as terreno', 
+                    'products.lote as lote', 
+                    'products.manzana as manzana', 
+                    'products.dimenciones as dimenciones', 
+                    'products.price as precio', 
+                    'projects.name as proyecto',
+                    'business_units.name as unidad'
+            )
+           ->get();
+   
         return response()->json($datas);
     }
 

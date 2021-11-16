@@ -12,6 +12,7 @@ class Project extends Model
         'name',
         'description',
         'progress',
+        'total_investment',
         'status',
         'manager_user_id',
         'business_unit_id',
@@ -29,7 +30,16 @@ class Project extends Model
 
     public function products()//relacion inversa echa correctamente
     {
-        return $this->hasMany(Product::class);
+        return $this->hasMany(Product::class,'id');
     }
 
+    public function investor()
+    {
+        return $this->belongsToMany(Investor::class)->withPivot('amount','project_id','created_at')->withTimestamps();
+    }
+
+    public function projectProgress()
+    {
+        return $this->hasMany(ProjectProgress::class);
+    }
 }

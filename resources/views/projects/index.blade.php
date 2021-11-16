@@ -22,6 +22,7 @@
                                 <th>Estatus</th>
                                 <th>Encargado</th>
                                 <th>Unidad de negocio</th>
+                                <th>Total de inversion</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
@@ -39,7 +40,11 @@
                                         @endif 
                                      </td>
                                      <td>  {{$proyecto->bussinesUnit->name}}  </td>
+                                     <td>${{$proyecto->total_investment}}</td>
                                     <td>
+                                        <a href="{{route('projects.show',$proyecto)}}" class="btn btn-outline-primary">
+                                            <i class="bi bi-eye"></i>
+                                        </a>
                                         <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal{{$proyecto->id}}" class="btn btn-outline-success">
                                             <i class="bi bi-pencil"></i>
                                         </button>
@@ -86,7 +91,7 @@
                                                             <div class="form-group">
                                                                 <label for="">Encargado</label>
                                                                 <select class="form-control" name="manager_user_id" id="">
-                                                                    <option value="{{$proyecto->manager_user_id}}" >{{$proyecto->manager_user_id}}</option>
+                                                                    <option value="{{$proyecto->manager_user_id}}" >{{$proyecto->manager->name}}</option>
                                                                     @foreach ($managers as $manager)
                                                                         <option value="{{$manager->id}}">{{$manager->name}}--{{$manager->role[0]->name}}</option>
                                                                     @endforeach
@@ -98,7 +103,8 @@
                                                             <div class="form-group">
                                                                 <label for="">Unidad de negocio</label>
                                                                 <select class="form-control" name="business_unit_id" id="" required>
-                                                                    <option value="{{$proyecto->business_unit_id}}" >{{$proyecto->business_unit_id}}</option>
+                                                                    <option value="{{$proyecto->business_unit_id}}" >{{$proyecto->bussinesUnit->name}}</option>
+                                                                   
                                                                     @foreach ($unidades as $unidad)
                                                                         <option value="{{$unidad->id}}">{{$unidad->name}}</option>
                                                                     @endforeach

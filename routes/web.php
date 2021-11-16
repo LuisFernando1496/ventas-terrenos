@@ -6,9 +6,11 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ExpenseController;
+use App\Http\Controllers\InvestorController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\SaleController;
+use App\Models\Investor;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -66,12 +68,22 @@ Route::middleware(['auth:sanctum','verified'])->delete('/compras/{purchase}',[Pu
 Route::get('/productos-ajax/{id}',[ProductController::class,'ajax']);
 
 Route::middleware(['auth:sanctum','verified'])->get('/projects',[ProjectController::class,'index'])->name('projects');
+Route::middleware(['auth:sanctum','verified'])->get('/projects/{project}',[ProjectController::class,'show'])->name('projects.show');
 Route::middleware(['auth:sanctum','verified'])->post('/projects',[ProjectController::class,'store'])->name('projects.store');
+Route::middleware(['auth:sanctum','verified'])->patch('/projects/progress/{project}',[ProjectController::class,'progress'])->name('projects.progress');
 Route::middleware(['auth:sanctum','verified'])->patch('/projects/{project}',[ProjectController::class,'update'])->name('projects.update');
-Route::middleware(['auth:sanctum','verified'])->patch('/projects/delete/{project}',[ProjectController::class,'supr'])->name('bussinesUnit.supr');
+Route::middleware(['auth:sanctum','verified'])->patch('/projects/delete/{project}',[ProjectController::class,'supr'])->name('projects.supr');
+
+Route::middleware(['auth:sanctum','verified'])->get('investments',[InvestorController::class,'index'])->name('investors');
+Route::middleware(['auth:sanctum','verified'])->post('investments',[InvestorController::class,'store'])->name('investors.store');
+Route::middleware(['auth:sanctum','verified'])->patch('investments/{investor}',[InvestorController::class,'update'])->name('investors.update');
+Route::middleware(['auth:sanctum','verified'])->patch('investments/delete/{investor}',[InvestorController::class,'supr'])->name('investors.supr');
 
 Route::middleware(['auth:sanctum','verified'])->get('/sales',[SaleController::class,'index'])->name('sales');
 Route::middleware(['auth:sanctum','verified'])->get('/sales/seachByCode', [SaleController::class,'searchByCode']);
+Route::middleware(['auth:sanctum','verified'])->get('/sales/search', [SaleController::class,'search']);
 Route::middleware(['auth:sanctum','verified'])->post('/sales',[SaleController::class,'store'])->name('sales.store');
+Route::middleware(['auth:sanctum','verified'])->post('reprint', [SaleController::class,'reprint'])->name('reprint');   
 Route::middleware(['auth:sanctum','verified'])->patch('/sales/{sale}',[SaleController::class,'update'])->name('sales.update');
 Route::middleware(['auth:sanctum','verified'])->patch('/sales/delete/{sale}',[SaleController::class,'supr'])->name('sales.supr');
+Route::middleware(['auth:sanctum','verified'])->get('/sales/history',[SaleController::class,'historySale'])->name('history.sale');

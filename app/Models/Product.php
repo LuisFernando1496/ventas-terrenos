@@ -29,4 +29,9 @@ class Product extends Model{
     {
         return $this->belongsTo(Project::class,'project_id');
     }
+
+    public function productInSales()
+    {
+        return $this->hasMany(ProductInSale::class,'id');
+    }
 }

@@ -6,11 +6,13 @@
     </x-slot>
     <div class="row my-4 " style="padding-left: 20px;">
         <div class="col-md-4">
+            <form action="">
             <div class="input-group">
-                <input type="text" id="bar_code" onkeydown="searchByBarcode()" class="form-control"
+                
+                <input type="text" id="bar_code"  class="form-control" style="text-transform: uppercase"
                     placeholder="Código de barra" />
                 <div class="input-group-append">
-                    <button id="addProductByBarcodeButton" onclick="searchByBarcode()" class="btn btn-outline-secondary">
+                    <button id="addProductByBarcodeButton" type="submit" onclick="searchByBarcode(event)" class="btn btn-outline-secondary">
                         <svg width="1em" height="2em" viewBox="0 0 16 16" class="bi bi-upc-scan" fill="currentColor"
                             xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd"
@@ -19,15 +21,16 @@
                                 d="M3 4.5a.5.5 0 0 1 1 0v7a.5.5 0 0 1-1 0v-7zm2 0a.5.5 0 0 1 1 0v7a.5.5 0 0 1-1 0v-7zm2 0a.5.5 0 0 1 1 0v7a.5.5 0 0 1-1 0v-7zm2 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-7zm3 0a.5.5 0 0 1 1 0v7a.5.5 0 0 1-1 0v-7z" />
                         </svg>
                     </button>
-                </div>
+                </div></form>
             </div>
         </div>
         <div class="col-md-6">
+            <form action="">
             <div class="input-group">
-                <input type="text" id="search" style="text-transform: uppercase" class="form-control" name="search"
+                <input type="text" id="search" style="text-transform: uppercase"  class="form-control" name="search"
                     autocomplate="search" placeholder="Buscar producto" />
                 <div class="input-group-append">
-                    <button id="searchButton" class="btn btn-outline-secondary">
+                    <button id="searchButton" class="btn btn-outline-secondary" onclick="buscar(event)">
                         <svg width="1em" height="2em" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor"
                             xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd"
@@ -37,6 +40,7 @@
                         </svg>
                     </button>
                 </div>
+            </form>
             </div>
         </div>
         <div class="col-md-12" style="padding-left: 10px;">
@@ -104,15 +108,15 @@
                     <div class="row">
                         <div class="col-md-12 my-2">
                             <div class="row mx-2">
-                                <div class="col-md-12">
+                              {{--  <div class="col-md-12">
                                     <div class="form-group" style="position: relative">
                                         <label for="additional_discount">Descuento adicional (%)</label>
                                         <input type="number" step="any" min="0" max="100" class="form-control"
-                                            id="additional_discount" />
+                                            id="additional_discount" onkeyup="update()"/>
                                         <div class="invalid-tooltip">Descuento inválido</div>
                                     </div>
                                 </div>
-                            </div>
+                            </div>--}} 
                             <div class="row mx-2">
                                 <div class="col-md-6">
                                     <h6>Subtotal:</h6>
@@ -153,7 +157,7 @@
                                 <div class="col-md-12">
                                     <label for="client">Cliente</label>
                                     <select class="form-control" name="client_id" id="client_id">
-                                        <option value="">Cliente general</option>
+                                        <option value="0" selected disabled>Seleccionar cliente</option>
                                         @foreach ($clients as $client)
                                             <option value="{{ $client->id }}">{{ $client->name }}
                                                 {{ $client->last_name }}</option>
@@ -171,7 +175,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="ingress">Pago con</label>
-                                        <input type="number" step="any" min="0" class="form-control" id="ingress"
+                                        <input type="number" step="any" min="0" class="form-control" id="ingress" onkeyup="update()"
                                             required />
                                     </div>
                                 </div>
@@ -203,5 +207,10 @@
         </div>
     </form>
     </div>
+    <form id="reprintForm" target="_blank" action="/reprint" method="post">
+       
+        <input id="saleReprintId" type="hidden" name="sale_id">
+    </form>
+</div>
     <script src="{{ asset('js/ventas.js') }}"></script>
 </x-app-layout>
