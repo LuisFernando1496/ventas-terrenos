@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Payament;
+use App\Models\Sale;
 use Illuminate\Http\Request;
 
 class PayamentController extends Controller
@@ -14,7 +15,8 @@ class PayamentController extends Controller
      */
     public function index()
     {
-        //
+        $abonos = Sale::where('payment_type','=',2)->with(['ventas'])->get();
+        return $abonos;
     }
 
     /**

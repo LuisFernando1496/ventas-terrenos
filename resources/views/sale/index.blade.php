@@ -8,7 +8,7 @@
         <div class="col-md-4">
             <form action="">
             <div class="input-group">
-                
+
                 <input type="text" id="bar_code"  class="form-control" style="text-transform: uppercase"
                     placeholder="Código de barra" />
                 <div class="input-group-append">
@@ -116,7 +116,7 @@
                                         <div class="invalid-tooltip">Descuento inválido</div>
                                     </div>
                                 </div>
-                            </div>--}} 
+                            </div>--}}
                             <div class="row mx-2">
                                 <div class="col-md-6">
                                     <h6>Subtotal:</h6>
@@ -164,6 +164,10 @@
                                         @endforeach
                                     </select>
                                 </div>
+                                <div class="col-md-12" id="divabono">
+                                    <label for="abono">Abono</label>
+                                    <input type="number" name="abono" id="abono" class="form-control" step="any" hidden>
+                                </div>
                                 <div class="col-md-12">
                                     <div class="float-right pt-1">
                                         <input hidden type="radio" id="USD" name="USD">
@@ -208,7 +212,7 @@
     </form>
     </div>
     <form id="reprintForm" target="_blank" action="/reprint" method="post">
-       
+
         <input id="saleReprintId" type="hidden" name="sale_id">
     </form>
 </div>

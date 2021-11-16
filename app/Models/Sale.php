@@ -34,5 +34,10 @@ class Sale extends Model
     {
         return $this->hasOne(User::class,'id','user_id');
     }
-    
+
+    public function abonos()
+    {
+        return $this->hasMany(Payment::class,'id','sale_id');
+    }
+
 }
