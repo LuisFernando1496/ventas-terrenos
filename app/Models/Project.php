@@ -30,7 +30,7 @@ class Project extends Model
 
     public function products()//relacion inversa echa correctamente
     {
-        return $this->hasMany(Product::class,'id');
+        return $this->hasMany(Product::class);
     }
 
     public function investor()

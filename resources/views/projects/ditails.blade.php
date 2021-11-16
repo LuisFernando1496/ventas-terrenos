@@ -78,7 +78,6 @@
                                     <td>{{ $product->colonia }}</td>
                                     <td>${{ $product->productInSales[0]->total }}</td>
                                     <td>{{ $product->productInSales[0]->created_at }}</td>
-                                    <td>{{$project}}</td>
 
                                 </tr>
                                 <!-- Modal -->
@@ -100,7 +99,7 @@
                     @csrf
                     @method('PATCH')
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Crear Proyecto</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Agregar progreso del proyecto</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                             aria-label="Close"></button>
                     </div>
@@ -132,7 +131,7 @@
 
                         <div class="modal-footer">
                             <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-                            <button type="submit" class="btn btn-success"></button>
+                            <button type="submit" class="btn btn-success">Guardar</button>
                         </div>
                 </form>
             </div>
@@ -149,7 +148,7 @@
                     @csrf
                     @method('PATCH')
                     <div class="modal-header">
-                        <h5 class="modal-title" id="progressModalLabel">Lista de comnetarios</h5>
+                        <h5 class="modal-title" id="progressModalLabel">Lista de comentarios</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                             aria-label="Close"></button>
                     </div>
