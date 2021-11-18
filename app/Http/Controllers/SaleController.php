@@ -35,6 +35,7 @@ class SaleController extends Controller
     }
     public function store(Request $request)
     {
+        //return $request['payment_type'];
        //return response()->json(['success' => true, 'data' => $request->all()]);
         $sale = $request->all()["sale"];
         $client = Client::findOrFail($sale['client_id']);
@@ -49,13 +50,13 @@ class SaleController extends Controller
         $tipo = $request['payment_type'];
         try {
             DB::beginTransaction();
-            if($tipo == 2)
+            if($tipo == "2")
             {
                 $sale['status_credit'] = "Adeudo";
             }
             $sale = new Sale($sale);
             $sale->save();
-            if($tipo == 2)
+            if($sale->payment_type == "2")
             {
                 $request['status_credit'] = "adeudo";
                 $abono = new Payment();
@@ -63,14 +64,22 @@ class SaleController extends Controller
                 $abono->pay = $request['abono'];
 
                 $pagos = Payment::where('sale_id','=',$sale->id)->orderBy('created_at','DESC')->first();
-                if($pagos->faltante < $request['abono'])
+                if($pagos != null)
                 {
-                    $abono->faltante = 0;
+                    if($pagos->faltante < $request['abono'])
+                    {
+                        $abono->faltante = 0;
+                    }
+                    else
+                    {
+                        $abono->faltante = $pagos->faltante - $request['abono'];
+                    }
                 }
                 else
                 {
-                    $abono->faltante = $pagos->faltante - $request['abono'];
+                    $abono->faltante = $sale->cart_total - $request['abono'];
                 }
+
                 $abono->save();
             }
             foreach ($request->all()["products"] as $key => $item) {
@@ -92,14 +101,13 @@ class SaleController extends Controller
 
                 $productInSale = new ProductInSale($newProductInSale);
                 $productInSale->save();
-
-
             }
 
             DB::commit();
             return response()->json(['success' => true, 'data' => Sale::where('id', $sale->id)->first()]);
-        } catch (\Throwable $th) {
+        } catch (\Error $th) {
             DB::rollBack();
+            return $th;
             return response()->json(['success' => false, 'error' => $th]);
         }
 

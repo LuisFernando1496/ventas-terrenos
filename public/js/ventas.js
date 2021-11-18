@@ -10,6 +10,7 @@ let discountWarning = false;
 let notificationsCount = 0;
 $('#divabono').hide();
 $('#payment_type').change( function() {
+    console.log("Tipo de pago seleccionado ="+$(this).val());
     if ($('#payment_type').val() == 1) {
         $('#ingress').prop('readonly', true);
         $('#ingress').val(totalSale);
@@ -376,19 +377,42 @@ const update = () => {
             subtotal : subtotal
         });
     });
-    let request = {
-        sale : {
-            payment_type: $('#payment_type').find(':selected').val(),
-            amount_discount: totalDiscount,
-            discount: parseInt($('#additional_discount').val()),
-            cart_subtotal: generalSubtotal,
-            cart_total: totalSale,
-            turned: parseInt($('#turned').text()),
-            ingress: parseInt($('#ingress').val()),
-            client_id: $('#client_id').find(':selected').val()
-        },
-            products:items
-        };
+    let request;
+    if($('#payment_type').find(':selected').val() == 2)
+    {
+        request = {
+            sale : {
+                payment_type: $('#payment_type').find(':selected').val(),
+                amount_discount: totalDiscount,
+                discount: parseInt($('#additional_discount').val()),
+                cart_subtotal: generalSubtotal,
+                cart_total: totalSale,
+                turned: parseInt($('#turned').text()),
+                ingress: parseInt($('#ingress').val()),
+                client_id: $('#client_id').find(':selected').val(),
+
+            },
+                products:items,
+                abono: $('#abono').val()
+            };
+    }
+    else
+    {
+        request = {
+            sale : {
+                payment_type: $('#payment_type').find(':selected').val(),
+                amount_discount: totalDiscount,
+                discount: parseInt($('#additional_discount').val()),
+                cart_subtotal: generalSubtotal,
+                cart_total: totalSale,
+                turned: parseInt($('#turned').text()),
+                ingress: parseInt($('#ingress').val()),
+                client_id: $('#client_id').find(':selected').val()
+            },
+                products:items
+            };
+    }
+
     $.ajax({
         url: "/sales",
         headers: {

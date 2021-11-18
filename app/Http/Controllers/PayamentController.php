@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Payament;
+use App\Models\Payment;
 use App\Models\Sale;
 use Illuminate\Http\Request;
 
@@ -46,7 +46,7 @@ class PayamentController extends Controller
      * @param  \App\Models\Payament  $payament
      * @return \Illuminate\Http\Response
      */
-    public function show(Payament $payament)
+    public function show(Payment $payament)
     {
         //
     }
@@ -57,7 +57,7 @@ class PayamentController extends Controller
      * @param  \App\Models\Payament  $payament
      * @return \Illuminate\Http\Response
      */
-    public function edit(Payament $payament)
+    public function edit(Payment $payament)
     {
         //
     }
@@ -69,7 +69,7 @@ class PayamentController extends Controller
      * @param  \App\Models\Payament  $payament
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Payament $payament)
+    public function update(Request $request, Payment $payament)
     {
         //
     }
@@ -80,7 +80,7 @@ class PayamentController extends Controller
      * @param  \App\Models\Payament  $payament
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Payament $payament)
+    public function destroy(Payment $payament)
     {
         //
     }
