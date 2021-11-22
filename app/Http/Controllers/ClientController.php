@@ -108,12 +108,11 @@ class ClientController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Client  $client
-     * @return \Illuminate\Http\Response
-     */
+   public function historyClient(Client $client)
+   {
+       $cliente = Client::where('status',true)->where('id',$client->id)->with('sales.productsInSale')->get();
+       return view('clients.historySale',['cliente'=>$cliente]);
+   }
 
     public function supr(Client $client){
         

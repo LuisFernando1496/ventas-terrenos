@@ -46,6 +46,7 @@ Route::middleware(['auth:sanctum','verified'])->patch('/productos/{product}',[Pr
 Route::middleware(['auth:sanctum','verified'])->patch('/productos/delete/{product}',[ProductController::class,'supr'])->name('productos.supr');
 
 Route::middleware(['auth:sanctum','verified'])->get('/clients',[ClientController::class,'index'])->name('clients');
+Route::middleware(['auth:sanctum','verified'])->get('/clients/historyClient/{client}',[ClientController::class,'historyClient'])->name('historyClient');
 Route::middleware(['auth:sanctum','verified'])->post('/clients',[ClientController::class,'store'])->name('clients.store');
 Route::middleware(['auth:sanctum','verified'])->patch('/clients/{client}',[ClientController::class,'update'])->name('clients.update');
 Route::middleware(['auth:sanctum','verified'])->patch('/clients/delete/{client}',[ClientController::class,'supr'])->name('clients.supr');

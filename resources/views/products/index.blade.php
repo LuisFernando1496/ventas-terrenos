@@ -17,7 +17,7 @@
                         <thead>
                             <tr>
                              
-                                <th>No. barras</th>
+                                <th>ID</th>
                                 <th>Lote</th>
                                 <th>Manzana</th>
                                 <th>Calle</th>

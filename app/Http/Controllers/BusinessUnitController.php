@@ -16,7 +16,8 @@ class BusinessUnitController extends Controller
      */
     public function index()
     {
-        $units = BusinessUnit::where('status',true)->get();
+        $units = BusinessUnit::where('status',true)->with('projects')->get();
+      //  return $units;
         return view('businesUnits.index',['business'=>$units]);
     }
 
