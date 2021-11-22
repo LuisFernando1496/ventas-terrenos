@@ -8,19 +8,34 @@ let totalSale = 0;
 let totalSaleUSD = 0;
 let discountWarning = false;
 let notificationsCount = 0;
-
+$('#divabono').hide();
 $('#payment_type').change( function() {
+    console.log("Tipo de pago seleccionado ="+$(this).val());
     if ($('#payment_type').val() == 1) {
         $('#ingress').prop('readonly', true);
         $('#ingress').val(totalSale);
+        $('#abono').removeAttr('name');
+        $('#abono').prop('hidden',true);
+        $('#abono').prop('required',false);
+        $('#divabono').hide();
         // client.style.visibility = 'hidden';
         update();
     }else if ($('#payment_type').val() == 0) {
         $('#ingress').prop('readonly', false);
+        $('#abono').removeAttr('name');
+        $('#abono').prop('hidden',true);
+        $('#abono').prop('required',false);
+        $('#divabono').hide();
         // client.style.visibility = 'hidden';
     }else{
         $('#ingress').prop('readonly', true);
         $('#ingress').val(0);
+        $('#divabono').show();
+        $('#abono').prop('hidden',false);
+        $('#abono').val(1);
+        $('#abono').prop('required',true);
+        $('#abono').attr('name','abono');
+        $('#abono').attr('min',1);
         if($( "#client_id option:selected" ).val()==""){
             console.log($( "#client_id option:selected" ).val());
             $('#paymentButton').prop('disabled',true);
@@ -29,13 +44,13 @@ $('#payment_type').change( function() {
             $('#paymentButton').prop('disabled',false);
         }
         // client.style.visibility = 'visible';
-    }   
+    }
 });
 $('#client_id').change( function() {
         if($( "#client_id option:selected" ).val()==""){
             console.log($( "#client_id option:selected" ).val());
             $('#paymentButton').prop('disabled',true);
-            
+
         }else{
             console.log($( "#client_id option:selected" ).val());
             $('#paymentButton').prop('disabled',false);
@@ -83,21 +98,21 @@ const buscar = (event) =>
                                     $('#resultTable').prop('hidden',true);
                                     addProduct($(this).data('id'));
                                 });
-                            }   
+                            }
                             else{
                                 $('#searchResult').append(
                                     '<tr class="item-result">'+
                                         '<td colspan="8">No se encontraron resultados</td>'+
                                     '</tr>'
                                 );
-                            } 
+                            }
                         },
                         error: function(e) {
                             console.log("ERROR", e);
                         },
                     });
                 }
-            } 
+            }
 
 const addProduct = (idProduct) => {
     let product = result.find(element => element.id == idProduct)
@@ -171,12 +186,12 @@ const addProduct = (idProduct) => {
     });
     update();
 }
- 
-            
+
+
 
 const searchByBarcode = (event) => {
     event.preventDefault();
-     
+
     $('#searchResult').empty();
     if ($("#bar_code").val().length != 0) {
         $.ajax({
@@ -285,11 +300,11 @@ const update = () => {
     $('#totalSale').text(totalSale.toFixed(2));
     $('#totalSaleUSD').text(totalSaleUSD.toFixed(2));
     // if ($('#payment_type').val() == 1) {
-    //     $('#ingress').val(totalSale.toFixed(2));    
+    //     $('#ingress').val(totalSale.toFixed(2));
     // }else{
-    //     $('#ingress').text(totalSale.toFixed(2));    
+    //     $('#ingress').text(totalSale.toFixed(2));
     // }
-  
+
         let turned = $('#ingress').val() - totalSale.toFixed(2);
         turned = ((Math.round((turned) * 10000) / 10000));
         console.log('holaaa======== '+turned)
@@ -305,7 +320,7 @@ const update = () => {
         else {
             $('#turned').text('0.00');
         }
-    
+
 
     if (shoppingListForm.checkValidity() && totalSale !== 0) {
         $('#paymentButton').prop('disabled', false);
@@ -362,19 +377,42 @@ const update = () => {
             subtotal : subtotal
         });
     });
-    let request = {
-        sale : {
-            payment_type: $('#payment_type').find(':selected').val(),
-            amount_discount: totalDiscount,
-            discount: parseInt($('#additional_discount').val()),
-            cart_subtotal: generalSubtotal,
-            cart_total: totalSale,
-            turned: parseInt($('#turned').text()),
-            ingress: parseInt($('#ingress').val()),
-            client_id: $('#client_id').find(':selected').val()
-        },
-            products:items
-        };
+    let request;
+    if($('#payment_type').find(':selected').val() == 2)
+    {
+        request = {
+            sale : {
+                payment_type: $('#payment_type').find(':selected').val(),
+                amount_discount: totalDiscount,
+                discount: parseInt($('#additional_discount').val()),
+                cart_subtotal: generalSubtotal,
+                cart_total: totalSale,
+                turned: parseInt($('#turned').text()),
+                ingress: parseInt($('#ingress').val()),
+                client_id: $('#client_id').find(':selected').val(),
+
+            },
+                products:items,
+                abono: $('#abono').val()
+            };
+    }
+    else
+    {
+        request = {
+            sale : {
+                payment_type: $('#payment_type').find(':selected').val(),
+                amount_discount: totalDiscount,
+                discount: parseInt($('#additional_discount').val()),
+                cart_subtotal: generalSubtotal,
+                cart_total: totalSale,
+                turned: parseInt($('#turned').text()),
+                ingress: parseInt($('#ingress').val()),
+                client_id: $('#client_id').find(':selected').val()
+            },
+                products:items
+            };
+    }
+
     $.ajax({
         url: "/sales",
         headers: {
@@ -384,19 +422,19 @@ const update = () => {
         contentType: "application/json; charset=iso-8859-1",
         data:JSON.stringify(request),
         dataType: 'html',
-        success: function(data) {                                                
+        success: function(data) {
             if(JSON.parse(data).success){
                 //console.log(JSON.parse(data).data.products_in_sale)
                 console.log(JSON.parse(data).data.id)
                 $('#saleReprintId').val(JSON.parse(data).data.id)
                 $('#reprintForm').submit()
-                location.reload();  
-            }   
+                location.reload();
+            }
             else{
                 alert(data);
                 $('#paymentButton').prop('disabled',false);
                 console.log(JSON.parse(data));
-            } 
+            }
         },
         error: function(e) {
             console.log("ERROR", e);

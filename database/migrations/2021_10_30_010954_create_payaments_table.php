@@ -15,6 +15,11 @@ class CreatePayamentsTable extends Migration
     {
         Schema::create('payaments', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('sale_id');
+            $table->foreign('sale_id')->references('id')->on('sales')->onUpdate('cascade')->onDelete('cascade');
+            $table->decimal('pay',8,2);
+            $table->decimal('faltante',8,2);
+            $table->boolean('status')->default(false);
             $table->timestamps();
         });
     }

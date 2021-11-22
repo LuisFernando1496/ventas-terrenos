@@ -16,8 +16,13 @@
                     <table class="table table-hover">
                         <thead>
                             <tr>
+<<<<<<< HEAD
                              
                                 <th>ID</th>
+=======
+
+                                <th>No. barras</th>
+>>>>>>> 29286c99f429740cc5cf623a00cae752e82faf9c
                                 <th>Lote</th>
                                 <th>Manzana</th>
                                 <th>Calle</th>
@@ -32,7 +37,7 @@
                         <tbody>
                             @forelse ($productos as $producto)
                                 <tr>
-                                   
+
                                     <td>{{ $producto->bar_code }}</td>
                                     <td>{{ $producto->lote}}</td>
                                     <td>{{ $producto->manzana }}</td>
@@ -41,7 +46,7 @@
                                     <td>{{ $producto->dimenciones }}</td>
                                     <td>{{ $producto->numero_terreno }}</td>
                                     <td>$ {{ $producto->price }}</td>
-                                    <td>{{ $producto->project->name }}</td>
+                                    <td>{{ $producto->project->name ?? "" }}</td>
                                     <td>
                                         <button type="button" data-bs-toggle="modal"
                                             data-bs-target="#exampleModal{{ $producto->id }}"
@@ -76,7 +81,7 @@
                                                         <div class="col">
                                                             <div class="form-group">
                                                                 <label for="">Codigo de barra</label>
-                                                                <input type="text" class="form-control" name="bar_code" value="{{$producto->bar_code}}" required> 
+                                                                <input type="text" class="form-control" name="bar_code" value="{{$producto->bar_code}}" required>
                                                             </div>
                                                         </div>
                                                         <div class="col">
@@ -90,7 +95,7 @@
                                                         <div class="col">
                                                             <div class="form-group">
                                                                 <label for="">Manzana</label>
-                                                                <input type="text" class="form-control" name="manzana" value="{{$producto->manzana}}" required> 
+                                                                <input type="text" class="form-control" name="manzana" value="{{$producto->manzana}}" required>
                                                             </div>
                                                         </div>
                                                         <div class="col">
@@ -104,7 +109,7 @@
                                                         <div class="col">
                                                             <div class="form-group">
                                                                 <label for="">Dimenciones(M<sup>2</sup>)</label>
-                                                                <input type="text" class="form-control" name="dimenciones" value="{{$producto->dimenciones}}" required> 
+                                                                <input type="text" class="form-control" name="dimenciones" value="{{$producto->dimenciones}}" required>
                                                             </div>
                                                         </div>
                                                         <div class="col">
@@ -118,7 +123,7 @@
                                                         <div class="col">
                                                             <div class="form-group">
                                                                 <label for="">Numero de terreno</label>
-                                                                <input type="text" class="form-control" name="numero_terreno" value="{{$producto->numero_terreno}}" required> 
+                                                                <input type="text" class="form-control" name="numero_terreno" value="{{$producto->numero_terreno}}" required>
                                                             </div>
                                                         </div>
                                                         <div class="col">
@@ -128,7 +133,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                   
+
                                                     <div class="col">
                                                         <div class="form-group">
                                                             <label for="">Oficina</label>
@@ -137,12 +142,12 @@
                                                                 @forelse ($officess as $office)
                                                                     <option value="{{ $office->id }}">{{ $office->name }}</option>
                                                                 @empty
-                
+
                                                                 @endforelse
                                                             </select>
                                                         </div>
                                                     </div>
-                
+
                                                     <div class="row">
                                                         <div class="form-group">
                                                             <label for="">Proyecto</label>
@@ -151,7 +156,7 @@
                                                          @forelse ($proyectos as $proyecto)
                                                                     <option value="{{ $proyecto->id }}">{{ $proyecto->name }}</option>
                                                                 @empty
-                
+
                                                                 @endforelse
                                                             </select>
                                                         </div>
@@ -184,14 +189,14 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                         aria-label="Close"></button>
                                 </div>
-                                
-                               
+
+
                                  <div class="modal-body">
                                     <div class="row">
                                         <div class="col">
                                             <div class="form-group">
                                                 <label for="">Codigo de barra</label>
-                                                <input type="text" class="form-control" name="bar_code" required> 
+                                                <input type="text" class="form-control" name="bar_code" required>
                                             </div>
                                         </div>
                                         <div class="col">
@@ -205,7 +210,7 @@
                                         <div class="col">
                                             <div class="form-group">
                                                 <label for="">Manzana</label>
-                                                <input type="text" class="form-control" name="manzana" required> 
+                                                <input type="text" class="form-control" name="manzana" required>
                                             </div>
                                         </div>
                                         <div class="col">
@@ -219,7 +224,7 @@
                                         <div class="col">
                                             <div class="form-group">
                                                 <label for="">Dimenciones(M<sup>2</sup>)</label>
-                                                <input type="text" class="form-control" name="dimenciones" required> 
+                                                <input type="text" class="form-control" name="dimenciones" required>
                                             </div>
                                         </div>
                                         <div class="col">
@@ -233,7 +238,7 @@
                                         <div class="col">
                                             <div class="form-group">
                                                 <label for="">Numero de terreno</label>
-                                                <input type="text" class="form-control" name="numero_terreno" required> 
+                                                <input type="text" class="form-control" name="numero_terreno" required>
                                             </div>
                                         </div>
                                         <div class="col">
@@ -243,8 +248,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                   
-                                   
+
+
                                     <div class="col">
                                         <div class="form-group">
                                             <label for="">Oficina</label>
@@ -257,7 +262,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                    
+
                                     <div class="row">
                                         <div class="form-group">
                                             <label for="">Proyecto</label>
