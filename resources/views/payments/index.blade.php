@@ -1,11 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Compras
-            <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal"
-            class="font-semibold btn btn-outline-success  float-right">
-            <i class="bi bi-pencil">Nueva Compra</i>
-        </button>
+            Abonos
          </h2>
     </x-slot>
 
@@ -16,7 +12,6 @@
                     <table class="table table-hover">
                         <thead>
                             <tr>
-                                <th>ID</th>
                                 <th>Folio Venta</th>
                                 <th>Total Venta</th>
                                 <th>Adeudo</th>
@@ -26,117 +21,120 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- Modal
-                            @forelse ($payments as $pay)
-                                @if ($pay->status == true)
-                                    <tr>
-                                @else
-                                    <tr class="table-danger">
-                                @endif
-                                    <td>{{ $pay->id }}</td>
-                                    <td>{{ $pay->title }}</td>
-                                    <td>{{ $pay->description }}</td>
-                                    <td>{{ $pay->product->bar_code ?? "" }}</td>
-                                    <td>{{ $pay->price }}</td>
-                                    <td>{{ $pay->quantity }}</td>
-                                    <td>{{ $pay->total}}</td>
+                            @forelse ($abonos as $abono)
+                                <tr>
+                                    <td>{{$abono->id}}</td>
+                                    <td>{{$abono->cart_total}}</td>
+                                    @php
+                                        $pagos = 0;
+                                        $adeudo = 0;
+                                        foreach ($abono->abonos as $abo) {
+                                            $pagos += $abo->pay;
+                                        }
+                                        $adeudo = $abono->cart_total - $pagos;
+                                    @endphp
+                                    <td>{{$adeudo}}</td>
+                                    <td>{{$pagos}}</td>
+                                    <td>{{$abono->client->name ?? ""}} {{$abono->client->last_name ?? ""}}</td>
                                     <td>
-                                        @if ($pay->status == true)
-                                        <button type="button" data-bs-toggle="modal"
-                                            data-bs-target="#exampleModal{{ $pay->id }}"
-                                            class="btn btn-outline-success">
-                                            <i class="bi bi-pencil"></i>
-                                        </button>
-                                        <form action="{{route('purchase.delete',$pay)}}" method="Post" class="d-inline" id="eliminar">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit"  class="btn btn-outline-danger" >
-                                                <i class="bi bi-trash"></i>
-                                            </button>
-                                        </form>
-                                        @else
-                                            Cancelado
-                                        @endif
-
-
+                                        <button class="btn btn-outline-primary" type="button" data-bs-toggle="modal" data-bs-target="#abonosModal{{$abono->id}}"><i class="bi bi-card-list"></i></button>
+                                        <button class="btn btn-outline-success" type="button" data-bs-toggle="modal" data-bs-target="#pagoModal{{$abono->id}}"><i class="bi bi-cash"></i></button>
                                     </td>
                                 </tr>
-
-                            <div class="modal fade" id="exampleModal{{ $pay->id }}" tabindex="-1"
-                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <form action="{{ route('purchase.update', $pay) }}" method="POST">
-                                                @csrf
-                                                @method('PATCH')
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">Editar Compra
-                                                        "{{ $pay->title }}"</h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                        aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <div class="row">
-                                                        <div class="col">
-                                                            <div class="form-group">
-                                                                <label for="">Título</label>
-                                                                <input type="text" class="form-control" name="title" required value="{{old('title',$pay->title)}}">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col">
-                                                            <div class="form-group">
-                                                                <label for="">Descripción</label>
-                                                                <textarea name="description" class="form-control" id="description" cols="30" rows="1">{{$pay->description}}</textarea>
-                                                            </div>
-                                                        </div>
-
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col">
-                                                            <div class="form-group">
-                                                                <label for="">Producto</label>
-                                                                <input type="text" readonly name="product_id" value="{{$pay->product->bar_code ?? "" }}" class="form-control">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col">
-                                                            <div class="form-group">
-                                                                <label for="">Cantidad</label>
-                                                                <input type="number" step="any" class="form-control cantidad" data-id="{{$pay->id}}" id="cantidad{{$pay->id}}" name="quantity" required value="{{old('quantity',$pay->quantity)}}">
-                                                            </div>
-                                                        </div>
-
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col">
-                                                            <div class="form-group">
-                                                                <label for="">Precio</label>
-                                                                <input type="number" step="any" class="form-control" name="price" id="price{{$pay->id}}" required readonly value="{{old('price',$pay->price)}}">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col">
-                                                            <div class="form-group">
-                                                                <label for="">Total</label>
-                                                                <input type="number" step="any" class="form-control" id="total{{$pay->id}}" name="total" required readonly value="{{old('total',$pay->total)}}">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary"
-                                                        data-bs-dismiss="modal">Cerrar</button>
-                                                    <button type="submit" class="btn btn-primary">Actualizar</button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
                             @empty
 
                             @endforelse
-                             -->
                         </tbody>
                     </table>
+                    {{ $abonos->links() }}
                 </div>
+                @forelse ($abonos as $abono)
+                    <!-- Modal abonos -->
+                    <div class="modal fade" id="abonosModal{{$abono->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Historial de abonos de la venta {{$abono->id}}</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Abono</th>
+                                            <th>Adeudo</th>
+                                            <th>Fecha</th>
+                                            <th>Ticket</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @forelse ($abono->abonos as $pago)
+                                            <tr>
+                                                <td>{{$pago->id}}</td>
+                                                <td>${{$pago->pay}}</td>
+                                                <td>${{$pago->faltante}}</td>
+                                                <td>{{$pago->created_at}}</td>
+                                                <td>
+                                                    <a target="blank" href="{{route('payment.show',$pago)}}" type="button" class="btn btn-outline-primary"><i class="bi bi-ticket"></i></a>
+                                                </td>
+                                            </tr>
+                                        @empty
+                                            <tr>
+                                                <td colspan="4">Sin abonos</td>
+                                            </tr>
+                                        @endforelse
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                    <!-- Modal hacer pago -->
+                    <div class="modal fade" id="pagoModal{{$abono->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                @php
+                                    $pagos = 0;
+                                    $adeudo = 0;
+                                    foreach ($abono->abonos as $abo) {
+                                        $pagos += $abo->pay;
+                                    }
+                                    $adeudo = $abono->cart_total - $pagos;
+                                @endphp
+                                <form action="{{route('payment.store')}}" method="POST">
+                                    @csrf
+                                    <input type="text" hidden value="{{$abono->id}}" name="sale_id">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Realizar abono de la venta {{$abono->id}}</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label for="">Adeudo</label>
+                                                <input type="number" name="adeudo" readonly class="form-control" step="any" value="{{$adeudo}}">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="">Abono</label>
+                                                <input type="number" name="pay" class="form-control" step="any" max="{{$adeudo}}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                        <button class="btn btn-primary" type="submit">Pagar</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                @empty
+
+                @endforelse
         </div>
     </div>
     <script>

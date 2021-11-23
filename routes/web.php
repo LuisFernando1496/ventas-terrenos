@@ -7,6 +7,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\InvestorController;
+use App\Http\Controllers\PayamentController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\PurchaseController;
@@ -89,7 +90,8 @@ Route::middleware(['auth:sanctum','verified'])->patch('/sales/{sale}',[SaleContr
 Route::middleware(['auth:sanctum','verified'])->patch('/sales/delete/{sale}',[SaleController::class,'supr'])->name('sales.supr');
 Route::middleware(['auth:sanctum','verified'])->get('/sales/history',[SaleController::class,'historySale'])->name('history.sale');
 
-Route::middleware(['auth:sanctum','verified'])->get('/abonos',[PaymentController::class,'index'])->name('payment.index');
-Route::middleware(['auth:sanctum','verified'])->post('/abonos',[PaymentController::class,'store'])->name('payment.store');
-Route::middleware(['auth:sanctum','verified'])->patch('/abonos/{pay}',[PaymentController::class,'update'])->name('payment.update');
-Route::middleware(['auth:sanctum','verified'])->delete('/abonos/{pay}',[PaymentController::class,'destroy'])->name('payment.delete');
+Route::middleware(['auth:sanctum','verified'])->get('/abonos',[PayamentController::class,'index'])->name('payment.index');
+Route::middleware(['auth:sanctum','verified'])->post('/abonos',[PayamentController::class,'store'])->name('payment.store');
+Route::middleware(['auth:sanctum','verified'])->patch('/abonos/{pay}',[PayamentController::class,'update'])->name('payment.update');
+Route::middleware(['auth:sanctum','verified'])->delete('/abonos/{pay}',[PayamentController::class,'destroy'])->name('payment.delete');
+Route::middleware(['auth:sanctum','verified'])->get('/abonos/{pago}',[PayamentController::class,'show'])->name('payment.show');
