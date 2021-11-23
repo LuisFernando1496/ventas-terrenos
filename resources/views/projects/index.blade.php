@@ -23,6 +23,7 @@
                                 <th>Encargado</th>
                                 <th>Unidad de negocio</th>
                                 <th>Total de inversion</th>
+                                <th>Plano</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
@@ -41,6 +42,10 @@
                                      </td>
                                      <td>  {{$proyecto->bussinesUnit->name}}  </td>
                                      <td>${{$proyecto->total_investment}}</td>
+                                     <td>
+                                         <button type="button" data-bs-toggle="modal" data-bs-target="#imgModal{{$proyecto->id}}" class="btn btn-outline-success">
+                                        Ver plano</button>
+                                    </td>
                                     <td>
                                         <a href="{{route('projects.show',$proyecto)}}" class="btn btn-outline-primary">
                                             <i class="bi bi-eye"></i>
@@ -57,11 +62,33 @@
                                         </form>
                                     </td>
                                 </tr>
+                                <div class="modal fade" id="imgModal{{$proyecto->id}}" tabindex="-1" aria-labelledby="imgModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <form action="#" method="POST">
+                                               
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="imgModalLabel">Plano {{$proyecto->name}}</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                               <div class="modal-body">
+                                                    
+                                               <img src="{{asset($proyecto->plano)}}" alt="plano">
+                                                
+                                                </div>
+                                                   
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div> 
                                 <!-- Modal -->
                             <div class="modal fade" id="exampleModal{{$proyecto->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
-                                            <form action="{{route('projects.update',$proyecto)}}" method="POST">
+                                            <form action="{{route('projects.update',$proyecto)}}" method="POST" enctype="multipart/form-data">
                                                 @csrf @method('PATCH')
                                                 <div class="modal-header">
                                                     <h5 class="modal-title" id="exampleModalLabel">Editar usuario {{$proyecto->name}}</h5>
@@ -84,7 +111,15 @@
                                                                 <textarea type="text" class="form-control"cols="1" rows="0.5" name="description">{{$proyecto->description}}</textarea>
                                                             </div>
                                                         </div>
-                                                    
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <div class="form-group">
+                                                                <label for="">Inserta nueva imagen del plano</label>
+                                                                <input type="file" class="form-control" name="img_plano">
+                                                            </div>
+                                                        </div>
+                                                       
                                                     </div>
                                                     <div class="row">
                                                         <div class="col">
@@ -121,6 +156,8 @@
                                         </div>
                                     </div>
                                 </div> 
+                           
+                               
                             @empty
 
                             @endforelse
@@ -130,7 +167,7 @@
                 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
-                            <form action="{{route('projects.store')}}" method="POST">
+                            <form action="{{route('projects.store')}}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="exampleModalLabel">Crear Proyecto</h5>
@@ -151,6 +188,15 @@
                                             <div class="form-group">
                                                 <label for="">Descripcion</label>
                                                 <textarea type="text" class="form-control"cols="1" rows="0.5" name="description"></textarea>
+                                            </div>
+                                        </div>
+                                       
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label for="">Inserta la imagen del plano</label>
+                                                <input type="file" class="form-control" name="img_plano">
                                             </div>
                                         </div>
                                        
@@ -193,7 +239,8 @@
             </div>
         </div>
     </div>
-    
+              
+   
 </x-app-layout>
 
 

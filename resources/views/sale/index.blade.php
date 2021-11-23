@@ -10,7 +10,7 @@
             <div class="input-group">
 
                 <input type="text" id="bar_code"  class="form-control" style="text-transform: uppercase"
-                    placeholder="Código de barra" />
+                    placeholder="ID" />
                 <div class="input-group-append">
                     <button id="addProductByBarcodeButton" type="submit" onclick="searchByBarcode(event)" class="btn btn-outline-secondary">
                         <svg width="1em" height="2em" viewBox="0 0 16 16" class="bi bi-upc-scan" fill="currentColor"

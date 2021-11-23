@@ -21,7 +21,10 @@
     </div>
 
 
-
+@php
+    $unitDes = 0;
+    $unitTer = 0;
+@endphp
     @forelse($business as $unit)
         <div class="p-2 bd-highlight">
             <div class="col-auto d-flex flex-row justify-content-center alig-items-center">
@@ -52,9 +55,29 @@
                                         </thead>
                                         <tbody>
                                             <tr class="text-center">
-                                                <td>0</td>
-                                                <td>0</td>
-                                                <td>0</td>
+                                                <td>{{count($unit->projects)}}</td>
+                                                <td>
+                                                    @foreach ($unit->projects as $itemDes)
+                                                        @if ($itemDes->progress == 'En-movimientos')
+                                                        @php
+                                                             $unitDes+=1
+                                                        @endphp
+                                                       
+                                                        @endif
+                                                    @endforeach
+                                                    {{$unitDes}}
+                                                </td>
+                                                <td>
+                                                    @foreach ($unit->projects as $itemDes)
+                                                    @if ($itemDes->progress == 'Terminado')
+                                                    @php
+                                                          $unitTer+=1
+                                                    @endphp
+                                                   
+                                                    @endif
+                                                @endforeach
+                                                {{ $unitTer}}
+                                                </td>
                                             </tr>
 
                                         </tbody>

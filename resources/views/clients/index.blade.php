@@ -28,11 +28,14 @@
                                 <th>Colonia</th>
                                 <th>Estado</th>
                                 <th>Ciudad</th>
+                                <th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
                             @forelse ($clientes as $cliente)
+                           
                                 <tr>
+                                    <a href=""></a>
                                     <td>{{ $cliente->id }}</td>
                                     <td>{{ $cliente->name }}</td>
                                     <td>{{ $cliente->last_name }}</td>
@@ -46,6 +49,9 @@
                                     <td>{{ $cliente->direccion->estado}}</td>
                                     <td>{{ $cliente->direccion->ciudad}}</td>
                                     <td>
+                                        <a href="{{route('historyClient',$cliente)}}" class="btn btn-outline-primary">
+                                            <i class="bi bi-eye"></i>
+                                        </a>
                                         <button type="button" data-bs-toggle="modal"
                                             data-bs-target="#exampleModal{{ $cliente->id }}"
                                             class="btn btn-outline-success">

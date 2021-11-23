@@ -8,6 +8,7 @@ use App\Models\ProjectProgress;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class ProjectController extends Controller
 {
@@ -37,8 +38,14 @@ class ProjectController extends Controller
   
     public function store(Request $request)
     {
+        
+        $imagenNombre = $request->img_plano->getClientOriginalName();
+        $imagen = $request->file('img_plano');
+        Storage::disk('public')->put("imgPlanos/$imagenNombre",  file($imagen));
+        $imagen= Storage::url("imgPlanos/$imagenNombre");
         try {
             DB::beginTransaction();
+            $request['plano'] = $imagen;
             $proyecto= Project::create($request->all());
             DB::commit();
             return redirect()->route('projects')->with('mensaje',"El proyecto $request->name se a Creado");
@@ -99,8 +106,22 @@ class ProjectController extends Controller
 
     public function update(Request $request, Project $project)
     {
+        if($request->img_plano)
+        {
+           
+            $url = str_replace('storage','public',$project->plano);
+            Storage::delete($url);
+            $imagenNombre = $request->img_plano->getClientOriginalName();
+            $imagen = $request->file('img_plano');
+            Storage::disk('public')->put("imgPlanos/$imagenNombre",  file($imagen));
+            $imagen= Storage::url("imgPlanos/$imagenNombre");
+        }
+        else {
+            $imagen = $project->plano;
+        }
         try {
             DB::beginTransaction();
+            $request['plano'] = $imagen;
             $project->update($request->all());
             DB::commit();
             return redirect()->route('projects')->with('mensaje',"El proyecto $request->name se a Actualizado");
