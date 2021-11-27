@@ -1,15 +1,19 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-           Historial Cliente: {{$cliente[0]->name}} {{$cliente[0]->last_name}}
-           
-        </button>
+           Historial Cliente: 
          </h2>
+         <h3 class="font-semibold text-sm text-gray-500 leading-tight">
+            {{$cliente[0]->name}} {{$cliente[0]->last_name}}
+         </h3>
+         
     </x-slot>
-
+@php
+    $deuda = 0;
+@endphp
 
     <div class="py-12">
-        <h1  class="font-semibold text-xl text-gray-800 leading-tight">Productos Comprados</h1>
+        <h1  class="font-semibold text-xl text-gray-800 leading-tight" style="padding: 20px">Productos Comprados</h1>
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="container">
@@ -55,6 +59,9 @@
                                         @endif
                                     </td>
                                     <td>${{$itemHistory->faltante}}</td>
+                                    @php
+                                        $deuda += $itemHistory->faltante;
+                                    @endphp
                                     <td>${{$itemHistory->pay}}</td>
                                    @else
                                
@@ -233,5 +240,6 @@
                 </div>
                 </div>
                 </div>
-
+                <div>  <h3 class="float-right" style="padding-right: 20px">Deuda total: ${{$deuda}}</h3></div>
+              
 </x-app-layout>
