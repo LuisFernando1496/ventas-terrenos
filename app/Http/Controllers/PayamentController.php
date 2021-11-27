@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Payment;
 use App\Models\Sale;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PayamentController extends Controller
 {
@@ -15,7 +16,11 @@ class PayamentController extends Controller
      */
     public function index()
     {
-        $abonos = Sale::where('payment_type','=',2)->with(['ventas'])->get();
+        $abonos = Sale::where('payment_type','=',2)->with(['abonos','client'])->paginate(10);
+
+        return view('payments.index',[
+            'abonos' => $abonos
+        ]);
         return $abonos;
     }
 
@@ -37,7 +42,33 @@ class PayamentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //return $request;
+        try {
+            DB::beginTransaction();
+            $restante = $request->adeudo - $request->pay;
+            $pay = new Payment();
+            $pay->sale_id = $request->sale_id;
+            $pay->pay = $request->pay;
+            $pay->faltante = $restante;
+            $pay->save();
+            if($restante <= 0)
+            {
+                DB::table('sales')->where('id',$request->sale_id)->update([
+                    'status_credit' => "Pagado"
+                ]);
+            }
+            else
+            {
+                DB::table('sales')->where('id',$request->sale_id)->update([
+                    'status_credit' => "Adeudo"
+                ]);
+            }
+            DB::commit();
+            return redirect()->route('payment.index');
+        } catch (\Error $th) {
+            DB::rollBack();
+            return $th;
+        }
     }
 
     /**
@@ -46,9 +77,18 @@ class PayamentController extends Controller
      * @param  \App\Models\Payament  $payament
      * @return \Illuminate\Http\Response
      */
-    public function show(Payment $payament)
+    public function show(Payment $pago)
     {
-        //
+        //return $pago;
+        $pagos = Payment::where('sale_id','=',$pago->sale_id)->get();
+        $abonos = 0;
+        foreach ($pagos as $pago) {
+            $abonos += $pago->pay;
+        }
+        return view('payments.ticket',[
+            'pay' => $pago,
+            'abonos' => $abonos
+        ]);
     }
 
     /**

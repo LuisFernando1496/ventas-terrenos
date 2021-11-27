@@ -37,7 +37,12 @@ class Sale extends Model
 
     public function abonos()
     {
-        return $this->hasMany(Payment::class,'id','sale_id');
+        return $this->hasMany(Payment::class,'sale_id');
+    }
+
+    public function client()
+    {
+        return $this->belongsTo(Client::class,'client_id');
     }
 
 }
