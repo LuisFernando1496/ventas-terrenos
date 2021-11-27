@@ -1,9 +1,9 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        <h2 class="font-semibold text-sm text-gray-500 leading-tight">
            Historial Cliente: 
          </h2>
-         <h3 class="font-semibold text-sm text-gray-500 leading-tight">
+         <h3 class="font-semibold text-xl text-gray-800 leading-tight">
             {{$cliente[0]->name}} {{$cliente[0]->last_name}}
          </h3>
          
@@ -240,6 +240,6 @@
                 </div>
                 </div>
                 </div>
-                <div>  <h3 class="float-right" style="padding-right: 20px">Deuda total: ${{$deuda}}</h3></div>
+                <div>  <h3 class="float-right font-semibold text-xl text-gray-800 leading-tight" style="padding-right: 20px">Deuda total: ${{$deuda}}</h3></div>
               
 </x-app-layout>
