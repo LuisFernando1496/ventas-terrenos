@@ -108,9 +108,17 @@ class ClientController extends Controller
         }
     }
 
+    public function search(Request $request)
+    {
+        $clients = Client::where('status',true)->where("name","LIKE", "%{$request->search}%")->get();
+        return view('clients.searchClient',['clientes'=>$clients]);
+      //  return $request->all();
+    }
+
    public function historyClient(Client $client)
    {
-       $cliente = Client::where('status',true)->where('id',$client->id)->with('sales.productsInSale')->get();
+       $cliente = Client::where('status',true)->where('id',$client->id)->with(['sales.productsInSale','sales.abonos'])->get();
+      // return $cliente;
        return view('clients.historySale',['cliente'=>$cliente]);
    }
 

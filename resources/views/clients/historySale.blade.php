@@ -21,6 +21,9 @@
                                 <th>Producto</th>
                                 <th>Subtotal</th>
                                 <th>Descuento</th>
+                                <th>Credito</th>
+                                <th>Faltante</th>
+                                <th>Ultimo Abono</th>
                                 <th>Total</th>
                             </tr>
                         </thead>
@@ -33,9 +36,45 @@
                                     <td>{{$sale->user->name}}</td>
                                     <td>Terreno {{$sale->productsInSale[0]->product->dimenciones}}M<sup>2</sup>-Col-
                                         {{$sale->productsInSale[0]->product->colonia}}</td>
-                                    <td>$ {{$sale->cart_subtotal}}</td>
-                                    <td>{{$sale->amount_discount}}</td>
+                                    <td>${{$sale->cart_subtotal}}</td>
+                                    <td>${{$sale->amount_discount}}</td>
+                                   
+                                    @php
+                                    $llaves = count($sale->abonos);
+                                @endphp 
+                                  @forelse ($sale->abonos as $key => $itemHistory)  
+                                 
+                                   
+                                    
+                                   @if (($key+1) === $llaves)
+                                   <td style="color:white"> 
+                                        @if ($itemHistory->faltante > 0)
+                                        <p style="background-color: red; ">Adeudo</p>
+                                        @else
+                                        <p style="background-color: green">Pagado</p>
+                                        @endif
+                                    </td>
+                                    <td>${{$itemHistory->faltante}}</td>
+                                    <td>${{$itemHistory->pay}}</td>
+                                   @else
+                               
+                                   @endif
+                                     
+                                   
+                                   
+                                     @empty
+                                     <td>
+                                        <p style="color: black">Pago de contado</p> 
+                                        </td>
+                                        <td>$0.00</td>
+                                        <td>$0.00</td>
+                                     @endforelse
+                                       
+                                    
+                          
+                             
                                     <td>$ {{$sale->cart_total}}</td>
+                                   
                                   
                                 </tr>
                                 <!-- Modal -->

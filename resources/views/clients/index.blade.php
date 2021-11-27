@@ -8,12 +8,22 @@
         </button>
          </h2>
     </x-slot>
+    <div class="d-flex flex-column bd-highlight mb-3">
 
+        <form class="  float-right " style="margin-top: 20px ;width: 450px; padding-left: 70px">
+            <div class="form-group">
+                <input type="text" id="search" name="search" class="form-control" placeholder="Bascar...">
+            </div>
+
+
+        </form>
+
+    </div>
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="container">
-                    <table class="table table-hover">
+                    <table class="table table-sm">
                         <thead>
                             <tr>
                                 <th>ID</th>
@@ -31,7 +41,7 @@
                                 <th>Acciones</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="result">
                             @forelse ($clientes as $cliente)
                            
                                 <tr>
@@ -368,4 +378,19 @@
             </div>
         </div>
     </div>
+
+    <script>
+           window.addEventListener("load",function(){
+          document.getElementById("search").addEventListener("keyup",function(){
+        fetch(`/clients/seacrh?search=${document.getElementById("search").value}`,{ method:'get',headers: {'X-CSRF-Token': $('meta[name="_token"]').attr('content') }})
+        .then(response=>response.text())
+        .then(html=>{
+          document.getElementById("result").innerHTML = html
+          
+        })
+        
+             
+      })
+        });
+    </script>
 </x-app-layout>

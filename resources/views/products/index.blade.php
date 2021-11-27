@@ -190,7 +190,7 @@
                                     <div class="row">
                                         <div class="col">
                                             <div class="form-group">
-                                                <label for="">Codigo de barra</label>
+                                                <label for="">ID</label>
                                                 <input type="text" class="form-control" name="bar_code" required>
                                             </div>
                                         </div>
