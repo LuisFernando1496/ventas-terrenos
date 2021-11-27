@@ -16,8 +16,12 @@ class CreateExpensesTable extends Migration
         Schema::create('expenses', function (Blueprint $table) {
             $table->id();
             $table->string('name_expenditure');
-            $table->decimal('quantity');
+            $table->integer('quantity');
             $table->decimal('amount');
+            $table->unsignedBigInteger('business_unit_id')->nullable();
+            $table->foreign('business_unit_id')->references('id')->on('business_units')->onDelete('cascade');
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->boolean('status')->default(true);
             $table->timestamps();
         });

@@ -95,7 +95,7 @@
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form action="{{ route('projects.progress', $project[0]->id) }}" method="POST">
+                <form action="{{ route('projects.progress', $project[0]->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PATCH')
                     <div class="modal-header">
@@ -109,6 +109,15 @@
                                 <div class="form-group">
                                     <label for="">Comentario</label>
                                     <input type="text" class="form-control" name="progresss">
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="">Subir archivo</label>
+                                    <input type="file" class="form-control" name="archivo">
                                 </div>
                             </div>
 
@@ -158,8 +167,9 @@
                                 <tr>
 
                                     <th>Comentarios</th>
+                                    <th>Archivos</th>
                                     <th>Fecha</th>
-
+                                   
                                 </tr>
                             </thead>
                             <tbody>
@@ -168,8 +178,12 @@
                                     <tr>
 
                                         <td>{{ $itemProgress->progresss }}</td>
+                                        <td><button type="button" data-bs-toggle="modal" data-bs-target="#imgModal{{$itemProgress->id}}" class="btn btn-outline-success">
+                                            Ver </button></td>
                                         <td>{{$itemProgress->created_at}}</td>
+                                        
                                     </tr>
+                                   
                                 @empty
 
                                 @endforelse
@@ -185,6 +199,32 @@
     </div>
     </div>
     </div>
+    @forelse ($project[0]->projectProgress as $itemProgress)
+    <div class="modal fade" id="imgModal{{$itemProgress->id}}" tabindex="-1" aria-labelledby="imgModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+            
+                   
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="imgModalLabel">Plano {{$itemProgress->progresss}}</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                   <div class="modal-body">
+                        
+                   <img src="{{asset($itemProgress->file_progress)}}" alt="plano">
+                    
+                    </div>
+                       
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+                    </div>
+               
+            </div>
+        </div>
+    </div> 
+    @empty
+        
+    @endforelse
 
-
+    
 </x-app-layout>

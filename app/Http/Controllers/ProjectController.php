@@ -84,13 +84,19 @@ class ProjectController extends Controller
 
    public function progress(Request $request, Project $project)
    {
-       //return $project->progress;
+       //return $project->progress;'file_progress'
+       $archivo = $request->archivo->getClientOriginalName();
+        $imagen = $request->file('archivo');
+        Storage::disk('public')->put("file_progress/$archivo",  file($imagen));
+        $imagen= Storage::url("file_progress/$archivo");
       
        try {
                 DB::beginTransaction();
+                $request['file_progress']= $imagen;
             $progres = ProjectProgress::create([
                 'project_id'=> $project->id,
-                'progresss'=>$request->progresss
+                'progresss'=>$request->progresss,
+                'file_progress'=>$request->file_progress
             ]);
             $proyecto = Project::find($project->id);
             $proyecto->update([

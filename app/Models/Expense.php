@@ -11,6 +11,17 @@ class Expense extends Model
     protected $fillable =[
         'name_expenditure',
         'quantity',
-        'amount'
+        'amount',
+        'business_unit_id',
+        'user_id'
     ];
+
+    public function bussinesUnit()
+    {
+        return $this->belongsTo(BusinessUnit::class,'business_unit_id');
+    }
+    public function user()
+    {
+        return $this->hasOne(User::class,'id','user_id');
+    }
 }

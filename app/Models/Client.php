@@ -32,4 +32,9 @@ class Client extends Model
     {
         return $this->hasMany(Sale::class);
     }
+
+    public function expense()
+    {
+        return $this->hasmany(Expense::class);
+    }
 }

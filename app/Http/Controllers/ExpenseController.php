@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BusinessUnit;
 use App\Models\Expense;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -15,8 +16,9 @@ class ExpenseController extends Controller
      */
     public function index()
     {
-        $pagos = Expense::where('status',1)->get();
-        return view('expense.index',['pagos'=>$pagos]);
+        $expenses = Expense::where('status',1)->get();
+        $unidades = BusinessUnit::where('status',1)->get();
+        return view('expense.index',['expenses'=>$expenses,'unidades'=>$unidades]);
     }
 
     /**
@@ -39,9 +41,10 @@ class ExpenseController extends Controller
     {
         try {
             DB::beginTransaction();
+            $request['user_id']= auth()->user()->id;
             $expense = Expense::create($request->all());
             DB::commit();
-            return redirect()->route('pagos');
+            return redirect()->route('expenses');
         } catch (\Error $th) {
             DB::rollBack();
             return $th;
@@ -83,7 +86,7 @@ class ExpenseController extends Controller
             DB::beginTransaction();
             $expense->update($request->all());
             DB::commit();
-            return redirect()->route('pagos')->with('mensaje',"El pago $request->name_expenditure se a actualizado");
+            return redirect()->route('expenses')->with('mensaje',"El pago $request->name_expenditure se a actualizado");
         } catch (\Error $th) {
             DB::rollBack();
             return $th;
@@ -98,14 +101,14 @@ class ExpenseController extends Controller
      */
     public function supr(Expense $expense){
         try {
-            BD::beginTransaction();
+            DB::beginTransaction();
             $expense->update(
                 [ 
                     'status'=> false
                 ]
              );
-            BD::commit();
-            return redirect()->route('pagos')->with('mensaje',"El pago se a Eliminado");
+            DB::commit();
+            return redirect()->route('expenses')->with('mensaje',"El pago se a Eliminado");
         } catch (\Error $th) {
             DB::rollBack();
             return $th;

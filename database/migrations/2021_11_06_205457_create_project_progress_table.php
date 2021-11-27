@@ -18,6 +18,7 @@ class CreateProjectProgressTable extends Migration
             $table->unsignedBigInteger('project_id')->nullable();
             $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');
             $table->text('progresss');
+            $table->string('file_progress')->nullable();
             $table->timestamps();
         });
     }

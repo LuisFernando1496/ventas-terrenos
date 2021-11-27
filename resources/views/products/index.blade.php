@@ -16,13 +16,8 @@
                     <table class="table table-hover">
                         <thead>
                             <tr>
-<<<<<<< HEAD
                              
                                 <th>ID</th>
-=======
-
-                                <th>No. barras</th>
->>>>>>> 29286c99f429740cc5cf623a00cae752e82faf9c
                                 <th>Lote</th>
                                 <th>Manzana</th>
                                 <th>Calle</th>

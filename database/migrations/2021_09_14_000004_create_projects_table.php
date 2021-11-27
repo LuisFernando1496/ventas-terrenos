@@ -18,7 +18,7 @@ class CreateProjectsTable extends Migration
             $table->string('name');
             $table->string('plano');
             $table->text('description');
-            $table->enum('progress',['Apertura','Asignado', 'En-movimientos','Terminado'])->default('Apertura');
+            $table->string('progress')->default('Apertura');
             $table->boolean('status')->default(true);
             $table->unsignedBigInteger('manager_user_id')->nullable();
             $table->foreign('manager_user_id')->references('id')->on('users')->onDelete('cascade');

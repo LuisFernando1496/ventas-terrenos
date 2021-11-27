@@ -53,10 +53,10 @@ Route::middleware(['auth:sanctum','verified'])->patch('/clients/{client}',[Clien
 Route::middleware(['auth:sanctum','verified'])->patch('/clients/delete/{client}',[ClientController::class,'supr'])->name('clients.supr');
 
 //gastos
-Route::middleware(['auth:sanctum','verified'])->get('/pagos',[ExpenseController::class,'index'])->name('pagos');
-Route::middleware(['auth:sanctum','verified'])->post('/pagos',[ExpenseController::class,'store'])->name('pagos.store');
-Route::middleware(['auth:sanctum','verified'])->patch('/pagos/{expense}',[ExpenseController::class,'update'])->name('pagos.update');
-Route::middleware(['auth:sanctum','verified'])->patch('/pagos/delete/{expense}',[ExpenseController::class,'supr'])->name('pagos.supr');
+Route::middleware(['auth:sanctum','verified'])->get('/expenses',[ExpenseController::class,'index'])->name('expenses');
+Route::middleware(['auth:sanctum','verified'])->post('/expenses',[ExpenseController::class,'store'])->name('expenses.store');
+Route::middleware(['auth:sanctum','verified'])->patch('/expenses/{expense}',[ExpenseController::class,'update'])->name('expenses.update');
+Route::middleware(['auth:sanctum','verified'])->patch('/expenses/delete/{expense}',[ExpenseController::class,'supr'])->name('expenses.supr');
 
 Route::middleware(['auth:sanctum','verified'])->get('/bussinesUnit',[BusinessUnitController::class,'index'])->name('bussinesUnit');
 Route::middleware(['auth:sanctum','verified'])->post('/bussinesUnit',[BusinessUnitController::class,'store'])->name('bussinesUnit.store');
