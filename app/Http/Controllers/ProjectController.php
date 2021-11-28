@@ -85,6 +85,12 @@ class ProjectController extends Controller
    public function progress(Request $request, Project $project)
    {
        //return $project->progress;'file_progress'
+     /* $document ='application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+      $excel = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+      $pdf = 'application/pdf';
+       $archivo = $request->archivo->getClientMimeType();
+
+       return dd($archivo);*/
        $archivo = $request->archivo->getClientOriginalName();
         $imagen = $request->file('archivo');
         Storage::disk('public')->put("file_progress/$archivo",  file($imagen));

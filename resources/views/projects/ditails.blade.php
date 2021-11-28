@@ -202,8 +202,23 @@
                                     <tr>
 
                                         <td>{{ $itemProgress->progresss }}</td>
-                                        <td><button type="button" data-bs-toggle="modal" data-bs-target="#imgModal{{$itemProgress->id}}" class="btn btn-outline-success">
-                                            Ver </button></td>
+                                        <td>
+                                            @php
+                                            $extension = pathinfo($itemProgress->file_progress)['extension'];
+                                        @endphp
+                                         @if ( $extension =='docx' )
+                                            <a href="{{$itemProgress->file_progress}}" type="button" class="btn btn-outline-primary" target="_blank"><i class="bi bi-file-earmark-word"></i></a>
+                                           @elseif( $extension =='xlsx' )
+                                           <a href="{{$itemProgress->file_progress}}" type="button" class="btn btn-outline-success" target="_blank"><i class="bi bi-file-earmark-excel"></i></a>
+                                           @elseif( $extension =='pdf')
+                                           <a href="{{$itemProgress->file_progress}}" type="button" class="btn btn-outline-danger" target="_blank"><i class="bi bi-file-pdf"></i></a>
+                                           @else
+                                           <button type="button" data-bs-toggle="modal" data-bs-target="#imgModal{{$itemProgress->id}}" class="btn btn-outline-secondary">
+                                            <i class="bi bi-file-image"></i> </button>
+                                        @endif
+                                         
+                                        
+                                        </td>
                                         <td>{{$itemProgress->created_at}}</td>
                                         
                                     </tr>
@@ -234,8 +249,10 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                    <div class="modal-body">
-                        
-                   <img src="{{asset($itemProgress->file_progress)}}" alt="plano">
+               
+                     <img src="{{asset($itemProgress->file_progress)}}" alt="plano">
+               
+                   
                     
                     </div>
                        
