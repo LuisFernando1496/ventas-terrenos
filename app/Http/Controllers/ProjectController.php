@@ -66,9 +66,9 @@ class ProjectController extends Controller
       
         $proyecto = $project::where('status',true)
         ->where('id',$project->id)
-        ->with('investor','products.productInSales','projectProgress')->get();
-       // return $proyecto[0]->products;
-        return view('projects.ditails',['project'=>$proyecto]); 
+        ->with('investor','products.productInSales.sale.abonos','projectProgress')->get();
+       // return $proyecto[0]->products[0]->productInSales;
+         return view('projects.ditails',['project'=>$proyecto]); 
     }
 
     /**

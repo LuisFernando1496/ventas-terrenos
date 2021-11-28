@@ -66,16 +66,40 @@
 
                                 <th>Codigo de barras</th>
                                 <th>Colonia</th>
+                                <th>Cliente</th>
+                                <th>Ultimo abono</th>
+                                <th>Restante</th>
                                 <th>Precio venta</th>
                                 <th>Fecha</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($project[0]->products as $product)
+                            @forelse ($project[0]->products as  $product)
+                            @php
+                                $keys = count($product->productInSales[0]->sale->abonos)
+                            @endphp
                                 <tr>
 
                                     <td>{{ $product->bar_code }}</td>
                                     <td>{{ $product->colonia }}</td>
+                                    <th>{{$product->productInSales[0]->sale->client->name }}
+                                        {{$product->productInSales[0]->sale->client->last_name}}
+                                    </th>
+                                  
+                                        @forelse ($product->productInSales[0]->sale->abonos as $key => $itemAbonos)
+                                            @if ($key+1 === $keys )
+                                            <td>${{$itemAbonos->pay}} 
+                                                <button  type="button" data-bs-toggle="modal" data-bs-target="#abonoModal{{ $product->id }}" class="btn btn-outline-primary"> <i class="bi bi-eye"></i></button>
+                                            </td>
+                                           <td>${{$itemAbonos->faltante}} </td>
+                                            @else
+                                                
+                                            @endif
+                                        @empty
+                                            <td>$0.00</td>
+                                            <td>$0.00</td>
+                                        @endforelse
+                                   
                                     <td>${{ $product->productInSales[0]->total }}</td>
                                     <td>{{ $product->productInSales[0]->created_at }}</td>
 
@@ -225,6 +249,52 @@
     @empty
         
     @endforelse
-
+    @forelse ($project[0]->products as  $product)
+    <div class="modal fade" id="abonoModal{{$product->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+               
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Historial abonos
+                            {{ $product->productInSales[0]->sale->client->name }}</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                    </div>
+                   <div class="modal-body">
+                      
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>ID Venta</th>
+                                <th>Abono</th>
+                                <th>Faltante</th>
+                                <th>Fecha</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                         @forelse ($product->productInSales[0]->sale->abonos as $key => $itemHistory)  
+                            <tr>
+                                <td>{{ $product->productInSales[0]->sale->id}}</td>
+                                <td>${{$itemHistory->pay}}</td>
+                                <td>${{$itemHistory->faltante}}</td>
+                                <td>{{$itemHistory->created_at}}</td>
+                            </tr>
+                            @empty
+                            @endforelse                                              
+                        </tbody>
+                    </table>
+       
+                     </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+                    </div>
+           
+            </div>
+        </div>
+    </div>
+    @empty
+        
+    @endforelse
+   
     
 </x-app-layout>
