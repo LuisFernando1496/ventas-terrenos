@@ -47,15 +47,21 @@
                                      <td>${{$proyecto->total_investment}}</td>
                                      @php
                                          $ingresos = 0;
+                                         $egresos = 0;
+                                         $saldo = 0;
                                          foreach ($proyecto->products as $products) {
                                              foreach ($products->productInSales as $sales) {
                                                  $ingresos += $sales->total;
                                              }
+                                             foreach ($products->productInPurchases as $purchase) {
+                                                 $egresos += $purchase->total;
+                                             }
                                          }
+                                         $saldo = $ingresos - $egresos;
                                      @endphp
                                      <td>${{number_format($ingresos,2,'.',',')}}</td>
-                                     <td></td>
-                                     <td></td>
+                                     <td>${{number_format($egresos,2,'.',',')}}</td>
+                                     <td>${{number_format($saldo,2,'.',',')}}</td>
                                      <td>
                                          <button type="button" data-bs-toggle="modal" data-bs-target="#imgModal{{$proyecto->id}}" class="btn btn-outline-success">
                                         Ver plano</button>

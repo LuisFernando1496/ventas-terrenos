@@ -48,6 +48,9 @@
                                                 <th>Total de proyectos</th>
                                                 <th>Proyectos en desarrollo</th>
                                                 <th>Proyectos terminados</th>
+                                                <th>Total Ingresos</th>
+                                                <th>Total Egresos</th>
+                                                <th>Saldo</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -79,6 +82,25 @@
                                                     @endforeach
                                                     {{ $unitTer }}
                                                 </td>
+                                                @php
+                                                    $ingresos = 0;
+                                                    $egresos = 0;
+                                                    $saldo = 0;
+                                                    foreach ($unit->projects as $project) {
+                                                        foreach ($project->products as $product) {
+                                                            foreach ($product->productInSales as $sale) {
+                                                                $ingresos += $sale->total;
+                                                            }
+                                                            foreach ($product->productInPurchases as $purchase) {
+                                                                $egresos += $purchase->total;
+                                                            }
+                                                        }
+                                                    }
+                                                    $saldo = $ingresos - $egresos;
+                                                @endphp
+                                                <td>${{number_format($ingresos,2,'.',',')}}</td>
+                                                <td>${{number_format($egresos,2,'.',',')}}</td>
+                                                <td>${{number_format($saldo,2,'.',',')}}</td>
                                             </tr>
 
                                         </tbody>

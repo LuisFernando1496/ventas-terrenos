@@ -37,6 +37,6 @@ class Product extends Model{
 
     public function productInPurchases()
     {
-        return $this->hasMany(Purchase::class,'id','product_id');
+        return $this->hasMany(Purchase::class,'product_id');
     }
 }
