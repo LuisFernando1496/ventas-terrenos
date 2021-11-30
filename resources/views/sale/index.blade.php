@@ -56,9 +56,9 @@
                         <th scope="col">Código</th>
                         <th scope="col">Colonia</th>
                         <th scope="col">No. Terreno</th>
-                        <th scope="col">lote</th>
-                        <th scope="col">manzana</th>
-                        <th scope="col">dimenciones</th>
+                        <th scope="col">Lote</th>
+                        <th scope="col">Manzana</th>
+                        <th scope="col">Dimenciones</th>
                         <th scope="col">Precio</th>
                         <th scope="col">Proyecto</th>
                         <th scope="col">Unidad</th>
@@ -84,9 +84,9 @@
                                         <th scope="col">Código</th>
                                         <th scope="col">Colonia</th>
                                         <th scope="col">No. Terreno</th>
-                                        <th scope="col">lote</th>
-                                        <th scope="col">manzana</th>
-                                        <th scope="col">dimenciones</th>
+                                        <th scope="col">Lote</th>
+                                        <th scope="col">Manzana</th>
+                                        <th scope="col">Dimenciones</th>
                                         <th scope="col">Proyecto</th>
                                         <th scope="col">Unidad</th>
                                         <th scope="col">Precio</th>

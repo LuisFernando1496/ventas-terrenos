@@ -13,6 +13,7 @@
                         <thead>
                             <tr>
                                 <th>ID. Venta</th>
+                                <th>Productos</th>
                                 <th>Empleado</th>
                                 <th>Subtotal</th>
                                 <th>Descuento</th>
@@ -24,6 +25,13 @@
                             @forelse ($sales as $sale)
                                 <tr>
                                     <td>{{$sale->id}}</td>
+                                    <td>
+                                    @forelse ($sale->productsInSale as $product)
+                                        {{$product->product->bar_code}} - {{$product->product->project->name}} - {{$product->product->project->bussinesUnit->name}}
+                                    @empty
+                                        Sin productos
+                                    @endforelse
+                                    </td>
                                     <td>{{$sale->user->name}}</td>
                                     <td>$ {{$sale->cart_subtotal}}</td>
                                     <td>{{$sale->amount_discount}}</td>

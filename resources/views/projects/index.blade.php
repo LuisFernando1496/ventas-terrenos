@@ -23,6 +23,9 @@
                                 <th>Encargado</th>
                                 <th>Unidad de negocio</th>
                                 <th>Total de inversion</th>
+                                <th>Total Ingresos</th>
+                                <th>Total Egresos</th>
+                                <th>Saldo al día</th>
                                 <th>Plano</th>
                                 <th>Acciones</th>
                             </tr>
@@ -38,10 +41,21 @@
                                         No asignado
                                         @else
                                         {{$proyecto->manager->name}}
-                                        @endif 
+                                        @endif
                                      </td>
                                      <td>  {{$proyecto->bussinesUnit->name}}  </td>
                                      <td>${{$proyecto->total_investment}}</td>
+                                     @php
+                                         $ingresos = 0;
+                                         foreach ($proyecto->products as $products) {
+                                             foreach ($products->productInSales as $sales) {
+                                                 $ingresos += $sales->total;
+                                             }
+                                         }
+                                     @endphp
+                                     <td>${{number_format($ingresos,2,'.',',')}}</td>
+                                     <td></td>
+                                     <td></td>
                                      <td>
                                          <button type="button" data-bs-toggle="modal" data-bs-target="#imgModal{{$proyecto->id}}" class="btn btn-outline-success">
                                         Ver plano</button>
@@ -66,24 +80,24 @@
                                     <div class="modal-dialog modal-lg">
                                         <div class="modal-content">
                                             <form action="#" method="POST">
-                                               
+
                                                 <div class="modal-header">
                                                     <h5 class="modal-title" id="imgModalLabel">Plano {{$proyecto->name}}</h5>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
                                                <div class="modal-body">
-                                                    
+
                                                <img src="{{asset($proyecto->plano)}}" alt="plano">
-                                                
+
                                                 </div>
-                                                   
+
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
                                                 </div>
                                             </form>
                                         </div>
                                     </div>
-                                </div> 
+                                </div>
                                 <!-- Modal -->
                             <div class="modal fade" id="exampleModal{{$proyecto->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog">
@@ -102,7 +116,7 @@
                                                                 <input type="text" class="form-control" name="name" value="{{$proyecto->name}}">
                                                             </div>
                                                         </div>
-                                                    
+
                                                     </div>
                                                     <div class="row">
                                                         <div class="col">
@@ -119,7 +133,7 @@
                                                                 <input type="file" class="form-control" name="img_plano">
                                                             </div>
                                                         </div>
-                                                       
+
                                                     </div>
                                                     <div class="row">
                                                         <div class="col">
@@ -139,14 +153,14 @@
                                                                 <label for="">Unidad de negocio</label>
                                                                 <select class="form-control" name="business_unit_id" id="" required>
                                                                     <option value="{{$proyecto->business_unit_id}}" >{{$proyecto->bussinesUnit->name}}</option>
-                                                                   
+
                                                                     @foreach ($unidades as $unidad)
                                                                         <option value="{{$unidad->id}}">{{$unidad->name}}</option>
                                                                     @endforeach
                                                                 </select>
                                                             </div>
                                                         </div>
-                                                    
+
                                                     </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
@@ -155,9 +169,9 @@
                                             </form>
                                         </div>
                                     </div>
-                                </div> 
-                           
-                               
+                                </div>
+
+
                             @empty
 
                             @endforelse
@@ -181,7 +195,7 @@
                                                 <input type="text" class="form-control" name="name">
                                             </div>
                                         </div>
-                                       
+
                                     </div>
                                     <div class="row">
                                         <div class="col">
@@ -190,7 +204,7 @@
                                                 <textarea type="text" class="form-control"cols="1" rows="0.5" name="description"></textarea>
                                             </div>
                                         </div>
-                                       
+
                                     </div>
                                     <div class="row">
                                         <div class="col">
@@ -199,7 +213,7 @@
                                                 <input type="file" class="form-control" name="img_plano">
                                             </div>
                                         </div>
-                                       
+
                                     </div>
                                     <div class="row">
                                         <div class="col">
@@ -225,9 +239,9 @@
                                                 </select>
                                             </div>
                                         </div>
-                                     
+
                                     </div>
-                                   
+
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
                                     <button type="submit" class="btn btn-success">Crear</button>
@@ -239,8 +253,8 @@
             </div>
         </div>
     </div>
-              
-   
+
+
 </x-app-layout>
 
 

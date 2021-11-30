@@ -16,7 +16,7 @@
                     <table class="table table-hover">
                         <thead>
                             <tr>
-                             
+
                                 <th>ID</th>
                                 <th>Lote</th>
                                 <th>Manzana</th>
@@ -26,6 +26,7 @@
                                 <th>No. terreno</th>
                                 <th>Precio</th>
                                 <th>Proyecto</th>
+                                <th>U. Negocio</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
@@ -42,6 +43,7 @@
                                     <td>{{ $producto->numero_terreno }}</td>
                                     <td>$ {{ $producto->price }}</td>
                                     <td>{{ $producto->project->name ?? "" }}</td>
+                                    <td>{{ $producto->project->bussinesUnit->name }}</td>
                                     <td>
                                         <button type="button" data-bs-toggle="modal"
                                             data-bs-target="#exampleModal{{ $producto->id }}"
@@ -75,7 +77,7 @@
                                                     <div class="row">
                                                         <div class="col">
                                                             <div class="form-group">
-                                                                <label for="">Codigo de barra</label>
+                                                                <label for="">ID Producto</label>
                                                                 <input type="text" class="form-control" name="bar_code" value="{{$producto->bar_code}}" required>
                                                             </div>
                                                         </div>
