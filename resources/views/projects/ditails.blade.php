@@ -150,28 +150,31 @@
                             </div>
 
                         </div>
-                        <div class="row">
+                        <div class="row" id="staus" >
                             <div class="col">
                                 <div class="form-group">
                                     <label for="">Estatus</label>
-                                    <select class="form-control" name="status_progress" id="">
+                                    <select class="form-control" name="status_progress" id="selected">
                                         <option value="0" selected disabled>Selecciona un encargado para esta proyecto
                                         </option>
                                         <option value="En-movimientos">En movimientos</option>
                                         <option value="Terminado">Terminado</option>
                                     </select>
                                 </div>
-                            </div>
-                            <div class="row">
+                            </div> 
+                            <a href="#" onclick="cambio()" class="btn btn-outline-secondary" id="boton"> Agregar otro</a>
+                        </div> 
+                       
+                            <div class="row" id="otro_status" style="display: none">
                                 <div class="col">
                                     <div class="form-group">
                                         <label for="">Ingresar otro estatus</label>
-                                        <input type="text" class="form-control" name="otro">
+                                        <input type="text" class="form-control" name="otro" placeholder="Ingresa tu estatus">
                                     </div>
                                 </div>
     
                             </div>
-
+                      
                         </div>
 
 
@@ -337,5 +340,15 @@
 
     @endforelse
 
+    <script>
+        const cambio = () =>
+        {
+            let otro =  document.getElementById('otro_status').style.display = "";
+
+            let status = document.getElementById('staus').style.display = "none";
+         
+            
+        }
+    </script>
 
 </x-app-layout>
