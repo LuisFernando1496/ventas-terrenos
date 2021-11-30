@@ -19,10 +19,10 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        $proyectos = Project::where('status',true)->get();
+        $proyectos = Project::where('status', true)->get();
         $managers = User::all();
-        $unidades = BusinessUnit::where('status',true)->get();
-        return view('projects.index',['proyectos'=>$proyectos,'managers'=>$managers,'unidades'=>$unidades]);
+        $unidades = BusinessUnit::where('status', true)->get();
+        return view('projects.index', ['proyectos' => $proyectos, 'managers' => $managers, 'unidades' => $unidades]);
     }
 
     /**
@@ -35,20 +35,20 @@ class ProjectController extends Controller
         //
     }
 
-  
+
     public function store(Request $request)
     {
-        
+
         $imagenNombre = $request->img_plano->getClientOriginalName();
         $imagen = $request->file('img_plano');
         Storage::disk('public')->put("imgPlanos/$imagenNombre",  file($imagen));
-        $imagen= Storage::url("imgPlanos/$imagenNombre");
+        $imagen = Storage::url("imgPlanos/$imagenNombre");
         try {
             DB::beginTransaction();
             $request['plano'] = $imagen;
-            $proyecto= Project::create($request->all());
+            $proyecto = Project::create($request->all());
             DB::commit();
-            return redirect()->route('projects')->with('mensaje',"El proyecto $request->name se a Creado");
+            return redirect()->route('projects')->with('mensaje', "El proyecto $request->name se a Creado");
         } catch (\Error $th) {
             DB::rollBack();
             return $th;
@@ -63,12 +63,12 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
-      
-        $proyecto = $project::where('status',true)
-        ->where('id',$project->id)
-        ->with('investor','products.productInSales.sale.abonos','projectProgress')->get();
-       // return $proyecto[0]->products[0]->productInSales;
-         return view('projects.ditails',['project'=>$proyecto]); 
+
+        $proyecto = $project::where('status', true)
+            ->where('id', $project->id)
+            ->with('investor', 'products.productInSales.sale.abonos', 'projectProgress')->get();
+        // return $proyecto[0]->products[0]->productInSales;
+        return view('projects.ditails', ['project' => $proyecto]);
     }
 
     /**
@@ -82,53 +82,59 @@ class ProjectController extends Controller
         //
     }
 
-   public function progress(Request $request, Project $project)
-   {
-       //return $project->progress;'file_progress'
-     /* $document ='application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+    public function progress(Request $request, Project $project)
+    {
+
+
+        // return $project->progress;'file_progress'
+
+
+        /* $document ='application/vnd.openxmlformats-officedocument.wordprocessingml.document';
       $excel = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
       $pdf = 'application/pdf';
        $archivo = $request->archivo->getClientMimeType();
 
        return dd($archivo);*/
-       $archivo = $request->archivo->getClientOriginalName();
+        $archivo = $request->archivo->getClientOriginalName();
         $imagen = $request->file('archivo');
         Storage::disk('public')->put("file_progress/$archivo",  file($imagen));
-        $imagen= Storage::url("file_progress/$archivo");
-      
-       try {
-                DB::beginTransaction();
-                $request['file_progress']= $imagen;
+        $imagen = Storage::url("file_progress/$archivo");
+
+        if (!isset($request->status_progress)) {
+            $request['status_progress'] =  $request->otro;
+        }
+
+        try {
+            DB::beginTransaction();
+            $request['file_progress'] = $imagen;
             $progres = ProjectProgress::create([
-                'project_id'=> $project->id,
-                'progresss'=>$request->progresss,
-                'file_progress'=>$request->file_progress
+                'project_id' => $project->id,
+                'progresss' => $request->progresss,
+                'file_progress' => $request->file_progress
             ]);
             $proyecto = Project::find($project->id);
             $proyecto->update([
-                'progress'=>$request->status_progress
-     ]);
-     DB::commit();
-     return redirect()->route('projects')->with('mensaje',"El estatus de proyecto $project->name se a Actualizado");
-    } catch (\Error $th) {
-        DB::rollBack();
-        return $th;
-    }
+                'progress' => $request->status_progress
+            ]);
+            DB::commit();
+            return redirect()->route('projects')->with('mensaje', "El estatus de proyecto $project->name se a Actualizado");
+        } catch (\Error $th) {
+            DB::rollBack();
+            return $th;
+        }
     }
 
     public function update(Request $request, Project $project)
     {
-        if($request->img_plano)
-        {
-           
-            $url = str_replace('storage','public',$project->plano);
+        if ($request->img_plano) {
+
+            $url = str_replace('storage', 'public', $project->plano);
             Storage::delete($url);
             $imagenNombre = $request->img_plano->getClientOriginalName();
             $imagen = $request->file('img_plano');
             Storage::disk('public')->put("imgPlanos/$imagenNombre",  file($imagen));
-            $imagen= Storage::url("imgPlanos/$imagenNombre");
-        }
-        else {
+            $imagen = Storage::url("imgPlanos/$imagenNombre");
+        } else {
             $imagen = $project->plano;
         }
         try {
@@ -136,31 +142,31 @@ class ProjectController extends Controller
             $request['plano'] = $imagen;
             $project->update($request->all());
             DB::commit();
-            return redirect()->route('projects')->with('mensaje',"El proyecto $request->name se a Actualizado");
+            return redirect()->route('projects')->with('mensaje', "El proyecto $request->name se a Actualizado");
         } catch (\Error $th) {
             DB::rollBack();
             return $th;
         }
     }
 
-   
-    public function supr( Project $project){
-        
+
+    public function supr(Project $project)
+    {
+
         try {
             DB::beginTransaction();
             $project->update(
-               [ 
-                   'status'=> false
-               ]
+                [
+                    'status' => false
+                ]
             );
             DB::commit();
-            return redirect()->route('projects')->with('mensaje',"El proyecto $project->name se a Eliminado");
+            return redirect()->route('projects')->with('mensaje', "El proyecto $project->name se a Eliminado");
         } catch (\Error $th) {
             DB::rollBack();
             return $th;
         }
-
-     }
+    }
     public function destroy(Project $project)
     {
         //
