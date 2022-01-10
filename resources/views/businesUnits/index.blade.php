@@ -226,7 +226,7 @@
                     @csrf
 
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Crear Unidad de negocio</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Crear Unidad de Negocio</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                             aria-label="Close"></button>
                     </div>

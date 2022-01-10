@@ -18,11 +18,11 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Nombre</th>
-                                <th>Descripcion</th>
+                                <th>Descripción</th>
                                 <th>Estatus</th>
                                 <th>Encargado</th>
                                 <th>Unidad de negocio</th>
-                                <th>Total de inversion</th>
+                                <th>Total de inversión</th>
                                 <th>Total Ingresos</th>
                                 <th>Total Egresos</th>
                                 <th>Saldo al día</th>
@@ -127,7 +127,7 @@
                                                     <div class="row">
                                                         <div class="col">
                                                             <div class="form-group">
-                                                                <label for="">Descripcion</label>
+                                                                <label for="">Descripción</label>
                                                                 <textarea type="text" class="form-control"cols="1" rows="0.5" name="description">{{$proyecto->description}}</textarea>
                                                             </div>
                                                         </div>
@@ -135,7 +135,7 @@
                                                     <div class="row">
                                                         <div class="col">
                                                             <div class="form-group">
-                                                                <label for="">Inserta nueva imagen del plano</label>
+                                                                <label for="">Inserta nueva imágen del plano</label>
                                                                 <input type="file" class="form-control" name="img_plano">
                                                             </div>
                                                         </div>
@@ -206,7 +206,7 @@
                                     <div class="row">
                                         <div class="col">
                                             <div class="form-group">
-                                                <label for="">Descripcion</label>
+                                                <label for="">Descripción</label>
                                                 <textarea type="text" class="form-control"cols="1" rows="0.5" name="description"></textarea>
                                             </div>
                                         </div>
@@ -215,7 +215,7 @@
                                     <div class="row">
                                         <div class="col">
                                             <div class="form-group">
-                                                <label for="">Inserta la imagen del plano</label>
+                                                <label for="">Inserta la imágen del plano</label>
                                                 <input type="file" class="form-control" name="img_plano">
                                             </div>
                                         </div>

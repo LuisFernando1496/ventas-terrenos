@@ -18,7 +18,7 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Nombre</th>
-                                <th>Cantidad y Destino de inversion</th>
+                                <th>Cantidad y Destino de inversión</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
@@ -32,7 +32,7 @@
                                         $ {{$item->pivot->amount}} ----|----- {{$item->name}} <br/>
                                         @endforeach
                                     </td>
-                                     
+
                                     <td>
                                         <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal{{$investor->id}}" class="btn btn-outline-success">
                                             <i class="bi bi-pencil"></i>
@@ -64,7 +64,7 @@
                                                 <input type="text" class="form-control" name="name" value="{{$investor->name}}">
                                             </div>
                                         </div>
-                                       
+
                                     </div>
                                     <div class="row">
                                         <div class="col">
@@ -73,15 +73,15 @@
                                                 <input type="text" class="form-control" name="amount">
                                             </div>
                                         </div>
-                                       
+
                                     </div>
                                     <div class="row">
-                                        <h3>Selecciona una opcion</h3>
+                                        <h3>Selecciona una opción</h3>
                                         <div class="col">
                                             <div class="form-group">
-                                                <label for="">Projectos</label>
+                                                <label for="">Proyectos</label>
                                                 <select class="form-control" name="project_id" id="">
-                                                    <option value="0" selected disabled>Selecciona una opcion a invertir</option>
+                                                    <option value="0" selected disabled>Selecciona una opción a invertir</option>
                                                     @foreach ($projects as $project)
                                                         <option value="{{$project->id}}">{{$project->name}}</option>
                                                     @endforeach
@@ -96,7 +96,7 @@
                                                         <option value="{{$unit->id}}">{{$unit->name}}</option>
                                                     @endforeach
                                                 </select>
-                                            </div>--}} 
+                                            </div>--}}
                                         </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
@@ -105,7 +105,7 @@
                                             </form>
                                         </div>
                                     </div>
-                                </div> 
+                                </div>
                             @empty
 
                             @endforelse
@@ -129,7 +129,7 @@
                                                 <input type="text" class="form-control" name="name">
                                             </div>
                                         </div>
-                                       
+
                                     </div>
                                     <div class="row">
                                         <div class="col">
@@ -138,15 +138,15 @@
                                                 <input type="text" class="form-control" name="amount">
                                             </div>
                                         </div>
-                                       
+
                                     </div>
                                     <div class="row">
-                                        <h3>Selecciona una opcion</h3>
+                                        <h3>Selecciona una opción</h3>
                                         <div class="col">
                                             <div class="form-group">
-                                                <label for="">Projectos</label>
+                                                <label for="">Proyectos</label>
                                                 <select class="form-control" name="project_id" id="">
-                                                    <option value="0" selected disabled>Selecciona una opcion a invertir</option>
+                                                    <option value="0" selected disabled>Selecciona una opción a invertir</option>
                                                     @foreach ($projects as $project)
                                                         <option value="{{$project->id}}">{{$project->name}}</option>
                                                     @endforeach
@@ -156,15 +156,15 @@
                                             <div class="form-group">
                                                 <label for="">Unidades de negocio</label>
                                                 <select class="form-control" name="business_unit_id" id="">
-                                                    <option value="0" selected disabled>Selecciona una opcion a invertir</option>
+                                                    <option value="0" selected disabled>Selecciona una opción a invertir</option>
                                                     @foreach ($units as $unit)
                                                         <option value="{{$unit->id}}">{{$unit->name}}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
                                         </div>
-                                  
-                                   
+
+
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
                                     <button type="submit" class="btn btn-success">Crear</button>

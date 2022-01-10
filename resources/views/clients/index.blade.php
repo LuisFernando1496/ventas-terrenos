@@ -43,7 +43,7 @@
                         </thead>
                         <tbody id="result">
                             @forelse ($clientes as $cliente)
-                           
+
                                 <tr>
                                     <a href=""></a>
                                     <td>{{ $cliente->id }}</td>
@@ -83,7 +83,7 @@
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <form action="{{ route('clients.update', $cliente) }}" method="POST">
-                                                @csrf 
+                                                @csrf
                                                 @method('PATCH')
                                                 <div class="modal-header">
                                                     <h5 class="modal-title" id="exampleModalLabel">Editar cliente
@@ -97,7 +97,7 @@
                                         <div class="col">
                                             <div class="form-group">
                                                 <label for="">Nombre</label>
-                                                <input type="text" class="form-control" name="name" value="{{$cliente->name}}" required> 
+                                                <input type="text" class="form-control" name="name" value="{{$cliente->name}}" required>
                                             </div>
                                         </div>
                                         <div class="col">
@@ -106,7 +106,7 @@
                                                 <input type="text" class="form-control" name="last_name" value="{{$cliente->last_name}}" required>
                                             </div>
                                         </div>
-                                        
+
                                     </div>
                                     <div class="row">
                                         <div class="col">
@@ -121,13 +121,13 @@
                                                 <input type="email" class="form-control" name="email" value="{{$cliente->email}}" required>
                                             </div>
                                         </div>
-                                        
+
                                     </div>
                                     <div class="row">
                                         <div class="col">
                                             <div class="form-group">
                                                 <label for="">Colonia</label>
-                                                <input type="text" class="form-control" name="colonia" value="{{$cliente->direccion->colonia}}" required> 
+                                                <input type="text" class="form-control" name="colonia" value="{{$cliente->direccion->colonia}}" required>
                                             </div>
                                         </div>
                                         <div class="col">
@@ -136,22 +136,22 @@
                                                 <input type="text" class="form-control" name="calle" value="{{$cliente->direccion->calle}}" required>
                                             </div>
                                         </div>
-                                       
+
                                     </div>
                                     <div class="row">
                                         <div class="col">
                                             <div class="form-group">
-                                                <label for="">Telefono</label>
-                                                <input type="text" class="form-control" name="phonenumber" value="{{$cliente->phonenumber}}"  required> 
+                                                <label for="">Teléfono</label>
+                                                <input type="text" class="form-control" name="phonenumber" value="{{$cliente->phonenumber}}"  required>
                                             </div>
                                         </div>
                                         <div class="col">
                                             <div class="form-group">
                                                 <label for="">Numero Int..</label>
-                                                <input type="text" class="form-control" name="numero_int" value="{{$cliente->direccion->numero_int}}" placeholder="Opcional" required> 
+                                                <input type="text" class="form-control" name="numero_int" value="{{$cliente->direccion->numero_int}}" placeholder="Opcional" required>
                                             </div>
                                         </div>
-                                      
+
                                         <div class="col">
                                             <div class="form-group">
                                                 <label for="">Numero Ext.</label>
@@ -160,7 +160,7 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        
+
                                         <div class="col">
                                             <div class="form-group">
                                                 <label for="">Estado</label>
@@ -201,9 +201,9 @@
                                             </div>
                                         </div>
                                     </div>
-                                   
+
                                     <div class="row">
-                                        
+
                                         <div class="col">
                                             <div class="form-group">
                                                 <label for="">Ciudad</label>
@@ -211,8 +211,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                   
-                                   
+
+
 
                                 </div>
                                                 <div class="modal-footer">
@@ -242,14 +242,14 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                         aria-label="Close"></button>
                                 </div>
-                                
-                               
+
+
                                  <div class="modal-body">
                                     <div class="row">
                                         <div class="col">
                                             <div class="form-group">
                                                 <label for="">Nombre</label>
-                                                <input type="text" class="form-control" name="name" required> 
+                                                <input type="text" class="form-control" name="name" required>
                                             </div>
                                         </div>
                                         <div class="col">
@@ -258,7 +258,7 @@
                                                 <input type="text" class="form-control" name="last_name" required>
                                             </div>
                                         </div>
-                                        
+
                                     </div>
                                     <div class="row">
                                         <div class="col">
@@ -273,13 +273,13 @@
                                                 <input type="email" class="form-control" name="email" required>
                                             </div>
                                         </div>
-                                        
+
                                     </div>
                                     <div class="row">
                                         <div class="col">
                                             <div class="form-group">
                                                 <label for="">Colonia</label>
-                                                <input type="text" class="form-control" name="colonia" required> 
+                                                <input type="text" class="form-control" name="colonia" required>
                                             </div>
                                         </div>
                                         <div class="col">
@@ -288,22 +288,22 @@
                                                 <input type="text" class="form-control" name="calle" required>
                                             </div>
                                         </div>
-                                       
+
                                     </div>
                                     <div class="row">
                                         <div class="col">
                                             <div class="form-group">
-                                                <label for="">Telefono</label>
-                                                <input type="text" class="form-control" name="phonenumber"  required> 
+                                                <label for="">Teléfono</label>
+                                                <input type="text" class="form-control" name="phonenumber"  required>
                                             </div>
                                         </div>
                                         <div class="col">
                                             <div class="form-group">
                                                 <label for="">Numero Int..</label>
-                                                <input type="text" class="form-control" name="numero_int" placeholder="Opcional" required> 
+                                                <input type="text" class="form-control" name="numero_int" placeholder="Opcional" required>
                                             </div>
                                         </div>
-                                      
+
                                         <div class="col">
                                             <div class="form-group">
                                                 <label for="">Numero Ext.</label>
@@ -312,7 +312,7 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        
+
                                         <div class="col">
                                             <div class="form-group">
                                                 <label for="">Estado</label>
@@ -353,9 +353,9 @@
                                             </div>
                                         </div>
                                     </div>
-                                   
+
                                     <div class="row">
-                                        
+
                                         <div class="col">
                                             <div class="form-group">
                                                 <label for="">Ciudad</label>
@@ -363,8 +363,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                   
-                                   
+
+
 
                                 </div>
                                 <div class="modal-footer">
@@ -386,10 +386,10 @@
         .then(response=>response.text())
         .then(html=>{
           document.getElementById("result").innerHTML = html
-          
+
         })
-        
-             
+
+
       })
         });
     </script>

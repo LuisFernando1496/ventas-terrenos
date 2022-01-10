@@ -119,7 +119,7 @@
                                                     <div class="row">
                                                         <div class="col">
                                                             <div class="form-group">
-                                                                <label for="">Numero de terreno</label>
+                                                                <label for="">Número de terreno</label>
                                                                 <input type="text" class="form-control" name="numero_terreno" value="{{$producto->numero_terreno}}" required>
                                                             </div>
                                                         </div>
@@ -161,8 +161,8 @@
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary"
-                                                        data-bs-dismiss="modal">Close</button>
-                                                    <button type="submit" class="btn btn-primary">Save changes</button>
+                                                        data-bs-dismiss="modal">Cancelar</button>
+                                                    <button type="submit" class="btn btn-primary">Actualizar</button>
                                                 </div>
                                             </form>
                                         </div>
@@ -234,7 +234,7 @@
                                     <div class="row">
                                         <div class="col">
                                             <div class="form-group">
-                                                <label for="">Numero de terreno</label>
+                                                <label for="">Número de terreno</label>
                                                 <input type="text" class="form-control" name="numero_terreno" required>
                                             </div>
                                         </div>

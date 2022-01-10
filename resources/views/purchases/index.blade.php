@@ -17,7 +17,7 @@
                         <thead>
                             <tr>
                                 <th>Folio</th>
-                                <th>Titulo</th>
+                                <th>Título</th>
                                 <th>Descripción</th>
                                 <th>Producto</th>
                                 <th>Costo</th>
@@ -249,12 +249,12 @@
                                                     @forelse ($officess as $office)
                                                         <option value="{{ $office->id }}">{{ $office->name }}</option>
                                                     @empty
-    
+
                                                     @endforelse
                                                 </select>
                                             </div>
                                         </div>
-    
+
                                         <div class="row">
                                             <div class="form-group">
                                                 <label for="">Proyecto</label>
@@ -263,20 +263,20 @@
                                                     @forelse ($proyectos as $proyecto)
                                                         <option value="{{ $proyecto->id }}">{{ $proyecto->name }}</option>
                                                     @empty
-    
+
                                                     @endforelse
                                                 </select>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col" id="precio_normal"> 
+                                        <div class="col" id="precio_normal">
                                             <div class="form-group">
                                                 <label for="">Precio</label>
                                                 <input type="number" step="any" class="form-control" name="price" id="price" min="0" value="0" required>
                                             </div>
                                         </div>
-                                        
+
                                         <div class="col">
                                             <div class="form-group">
                                                 <label for="">Total</label>
@@ -284,7 +284,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                  
+
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
@@ -296,7 +296,7 @@
                 </div>
             </div>
         </div>
-       
+
     </div>
     <script>
         $(document).ready(function () {
@@ -390,7 +390,7 @@
             function total() {
                 var cantidad = $('#cantidad').val();
                 var precio = $('#precio').val();
-               
+
                 var price = $('#price').val();
                 var total = 0;
                 if(precio != 0)
