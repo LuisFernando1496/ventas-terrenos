@@ -26,7 +26,7 @@
                                 <th>Subtotal</th>
                                 <th>Descuento</th>
                                 <th>Credito</th>
-                                <th>Faltante</th>
+                                <th>Saldo</th>
                                 <th>Ultimo Abono</th>
                                 <th>Total</th>
                             </tr>
@@ -100,7 +100,7 @@
                 </div>
                 </div>
                 <div>
-                      <h3 class="float-right font-semibold text-xl text-gray-800 leading-tight" style="padding-right: 20px">Deuda total: ${{$deuda}}</h3>
+                      <h3 class="float-right font-semibold text-xl text-gray-800 leading-tight" style="padding-right: 20px">Saldo Total: ${{$deuda}}</h3>
                     </div>
                     @forelse ($cliente[0]->sales as $sale)
                     <div class="modal fade" id="exampleModal{{$sale->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

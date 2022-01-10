@@ -64,7 +64,7 @@
                         <thead>
                             <tr>
 
-                                <th>Codigo de barras</th>
+                                <th>ID</th>
                                 <th>Colonia</th>
                                 <th>Cliente</th>
                                 <th>Ultimo abono</th>

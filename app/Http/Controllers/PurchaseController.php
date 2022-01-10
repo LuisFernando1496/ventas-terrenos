@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BranchOffice;
 use App\Models\Product;
+use App\Models\Project;
 use App\Models\Purchase;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -18,9 +20,13 @@ class PurchaseController extends Controller
     {
         $purchases = Purchase::with('product')->get();
         $products = Product::where('status',true)->get();
+        $offices = BranchOffice::all();
+        $proyectos = Project::where('status',true)->get();
         return view('purchases.index',[
             'purchases' => $purchases,
-            'products' => $products
+            'products' => $products,
+            'officess' => $offices,
+            'proyectos'=> $proyectos,
         ]);
     }
 
@@ -42,8 +48,15 @@ class PurchaseController extends Controller
      */
     public function store(Request $request)
     {
-        //return $request;
+        //return $request->all();
         $product = $request['product_id'];
+        if($request->precio)
+        {
+            $price = $request->precio;
+        }
+        else{
+            $price = $request->price;
+        }
         if($product == "nuevo")
         {
             $producto = new Request();
@@ -54,7 +67,9 @@ class PurchaseController extends Controller
             $producto['dimenciones'] = $request['dimenciones'];
             $producto['colonia'] = $request['colonia'];
             $producto['numero_terreno'] = $request['numero_terreno'];
-            $producto['price'] = $request['price'];
+            $producto['price'] = $price;
+            $producto['branch_office_id'] = $request->branch_office_id;
+            $producto['project_id'] = $request->project_id;
             try {
                 DB::beginTransaction();
                 $products = new Product($producto->all());
@@ -64,7 +79,7 @@ class PurchaseController extends Controller
                 $purchase->description = $request->description;
                 $purchase->quantity = $request->quantity;
                 $purchase->product_id = $products->id;
-                $purchase->price = $request->price;
+                $purchase->price = $price;
                 $purchase->total = $request->total;
                 $purchase->save();
                 DB::commit();
@@ -84,7 +99,7 @@ class PurchaseController extends Controller
                 $purchase->title = $request->title;
                 $purchase->description = $request->description;
                 $purchase->quantity = $request->quantity;
-                $purchase->price = $request->price;
+                $purchase->price = $price;
                 $purchase->total = $request->total;
                 $purchase->save();
                 DB::commit();

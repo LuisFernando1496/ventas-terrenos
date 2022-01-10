@@ -6,50 +6,85 @@
 </head>
 <body>
 
-<style>
-.center {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-}
-td,th,tr,table {
-    border-top: 1px solid black;
-    border-collapse: collapse;
-}
-
-td.cantidad,th.cantidad {
-    word-break: break-all;
-}
-td.precio,th.precio {
-    word-break: break-all;
-}
-.centrado {
-    text-align: center;
-    align-content: center;
-    width: 100%;
-}
-img {
-    max-width: inherit;
-    width: inherit;
-}
-@media print{
-  .oculto-impresion, .oculto-impresion *{
-    display: none !important;
-  }
-}
+    <style>
+        .center {
+          display: block;
+          margin-left: auto;
+          margin-right: auto;
+           
+        }
+        
+        }
+        .left{
+            margin-left: 0px;
+          margin-right: auto;
+          margin-top: 0%;
+          padding-top: 0%;
+        }
+        td,tr,table {
+           
+            border-collapse: collapse;
+        }
+        
+        td.cantidad,th.cantidad {
+            word-break: break-all;
+        }
+        td.precio,th.precio {
+            word-break: break-all;
+        }
+        .centrado {
+            text-align: center;
+            align-content: center;
+            width: 100%;
+        }
+        img {
+            max-width: inherit;
+            width: inherit;
+        }
+        table.borde
+        {
+        
+          border-collapse:collapse;
+        }
+        }
+        @media print{
+          .oculto-impresion, .oculto-impresion *{
+            display: none !important;
+          }
+        }
 
 </style>
 <div>
-    <img class="center" src="{{asset('/logo_inusual.png')}}" alt="Logotipo">
-    <p class="centrado">
-        {{-- Calle {{$sale->branchOffice->address->street}},Numero {{$sale->branchOffice->address->ext_number}} <br>
-        Colonia {{$sale->branchOffice->address->suburb}} <br>--}}
-        Atendido por {{Auth::user()->name}} {{Auth::user()->last_name}} <br>
-        Fecha: {{$sale->created_at->format('d-m-y h:m:s')}} <br>
-        Folio: {{$sale->id}}
-    </p>
-    <section style="display: flex; justify-content: space-between; align-items: center;">
-        <div id="pro-th">CANTIDAD</div>
+ 
+    <div>
+        <table class="borde" width="100%;">
+        <thead>
+            <th class="borde" > <img class="left" src="{{asset('img/roven-capital.jpeg')}}" style="width:150px ; height:120px ;"  alt="Logotipo"></th>
+            <th>   <p class="centrado">
+                Roven Capital <br>
+                Km. 18.5 Carretera Aldama <br>
+                Chihuahua Chih. <br>
+                Atendido por {{Auth::user()->name}} {{Auth::user()->last_name}} <br>
+              
+            
+        </p></th>
+            <th> 
+                <p class="centrado">
+                    RCIBO <br> <br>
+                    Folio: {{$sale->id}} <br>
+                    Fecha: <br> {{$sale->created_at->format('d-m-y h:m:s')}} 
+                   
+                </p>
+               
+        </th>
+        </thead>
+    </table>
+     
+     
+     
+    <hr>
+    <section style="display: flex; justify-content: space-between; align-items: center;padding-top: 20%;" >
+        <div id="pro-th" >CANTIDAD</div>
         <div id="pre-th">PRODUCTO  <br></div>
         <div id="cod-th">PRECIO</div>
         <div id="subtotal">DESCUENTO</div>
@@ -69,7 +104,7 @@ img {
         <img src="roven-capital-bac.jpeg" alt="">
         <hr>
     @endforeach
-    <div id="total">
+    <div id="total" style="padding-top: 40%;padding-left: 80%;">
      {{--   Pago a crédito: {{$client->name." ".$client->last_name}}
         Dias de pago: {{$client->payment_days}}--}} 
         @if($sale->discount != null)Descuento:  %{{number_format($sale->discount,2,'.',',')}}@endif
@@ -78,8 +113,8 @@ img {
         <br>
         Total: ${{number_format($sale->cart_total,2,'.',',')}}
     </div>
-    <p class="centrado">RFC:{{Auth::user()->rfc}} </p>
-    <p class="centrado">Email: {{Auth::user()->email}}</p>
+    
+   
     <p class="centrado">¡GRACIAS POR SU COMPRA!</p>
     <br/>
     <br/>

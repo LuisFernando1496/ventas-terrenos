@@ -53,6 +53,7 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+       
         try {
             DB::beginTransaction();
             $producto = Product::create($request->all());
