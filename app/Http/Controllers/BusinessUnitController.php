@@ -46,14 +46,14 @@ class BusinessUnitController extends Controller
             try {
                 DB::beginTransaction();
                 $image = base64_encode(file_get_contents($request->file('imagen')));
-                    /*$imagenNombre = $request->imagen->getClientOriginalName();
-                    $imagen = $request->file('imagen');
-                    Storage::disk('public')->put("imagenUnits/$imagenNombre",  file($imagen));
+                $imagenNombre = $request->imagen->getClientOriginalName();
+                $imagen = $request->file('imagen');
+                Storage::disk('public')->put("imagenUnits/$imagenNombre",  file($imagen));
 
-                    $imagen= Storage::url("imagenUnits/$imagenNombre");*/
-                $imagen = "Sin imagen";
+                $imagen= Storage::url("imagenUnits/$imagenNombre");
+                //$imagen = "Sin imagen";
                 $request['photo'] = $imagen;
-                $request['image'] + $image;
+                $request['image'] = $image;
                 $units = BusinessUnit::create($request->all());
              DB::commit();
                 return redirect()->route('bussinesUnit')->with('mensaje',"La unidad de negocio $request->name se a Creado");
