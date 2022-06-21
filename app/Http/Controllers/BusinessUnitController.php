@@ -39,24 +39,28 @@ class BusinessUnitController extends Controller
      */
     public function store(Request $request)
     {
-      
+
             // 'photo'
-   
-    
-        try {
-            DB::beginTransaction();
-            $imagenNombre = $request->imagen->getClientOriginalName();
-            $imagen = $request->file('imagen');
-            Storage::disk('public')->put("imagenUnits/$imagenNombre",  file($imagen));
-            $imagen= Storage::url("imagenUnits/$imagenNombre");
-            $request['photo'] = $imagen;
-            $units = BusinessUnit::create($request->all());
-         DB::commit();
-            return redirect()->route('bussinesUnit')->with('mensaje',"La unidad de negocio $request->name se a Creado");
-        } catch (\Error $th) {
-            DB::rollBack();
-            return $th;
-        }
+
+
+            try {
+                DB::beginTransaction();
+                $image = base64_encode(file_get_contents($request->file('imagen')));
+                    /*$imagenNombre = $request->imagen->getClientOriginalName();
+                    $imagen = $request->file('imagen');
+                    Storage::disk('public')->put("imagenUnits/$imagenNombre",  file($imagen));
+
+                    $imagen= Storage::url("imagenUnits/$imagenNombre");*/
+                $imagen = "Sin imagen";
+                $request['photo'] = $imagen;
+                $request['image'] + $image;
+                $units = BusinessUnit::create($request->all());
+             DB::commit();
+                return redirect()->route('bussinesUnit')->with('mensaje',"La unidad de negocio $request->name se a Creado");
+            } catch (\Error $th) {
+                DB::rollBack();
+                return $th;
+            }
 
     }
 
@@ -93,7 +97,7 @@ class BusinessUnitController extends Controller
     {
         if($request->imagen)
         {
-           
+
             $url = str_replace('storage','public',$businessUnit->photo);
             Storage::delete($url);
             $imagenNombre = $request->imagen->getClientOriginalName();
@@ -117,11 +121,11 @@ class BusinessUnitController extends Controller
     }
 
     public function supr( BusinessUnit $businessUnit){
-        
+
         try {
             DB::beginTransaction();
             $businessUnit->update(
-               [ 
+               [
                    'status'=> false
                ]
             );

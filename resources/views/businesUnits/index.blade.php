@@ -29,9 +29,9 @@
                     <div class="row g-0">
                         <div class="col-md-4 position-relative">
 
-                            <img src="{{ asset($unit->photo) }}"
+                            <img src="{{ $unit->image }}"
                                 class="rounded position-absolute top-50 start-50 translate-middle"
-                                style="width: 250px;height:250px" alt="">
+                                style="width: 250px;height:250px" alt="{{ $unit->image }}">
 
                         </div>
                         <div class="col-md-8">
@@ -222,7 +222,7 @@
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form action="{{ route('bussinesUnit.store') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('bussinesUnit.store') }}" method="POST" accept-charset="UTF-8" enctype="multipart/form-data">
                     @csrf
 
                     <div class="modal-header">
@@ -253,7 +253,7 @@
                             <div class="col">
                                 <div class="form-group">
                                     <label for="">Subir imagen</label>
-                                    <input type="file" class="form-control" name="imagen">
+                                    <input type="file" accept="image/*" class="form-control" name="imagen">
                                 </div>
                             </div>
                         </div>
